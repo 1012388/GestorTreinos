@@ -1,5 +1,6 @@
 package pt.ipg.gestortreinos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class TreinoActivity extends AppCompatActivity {
 
@@ -26,7 +28,17 @@ public class TreinoActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Intent intent = getIntent();
+
+        TextView textViewTotal= (TextView) findViewById(R.id.textView_Total);
+
+        //Receber da classe o getRepetições
+        //textViewTotal.setText(""+total);
+
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -44,8 +56,8 @@ public class TreinoActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if(id == R.id.action_Eliminar){//Eliminar treino
             deletePractice();
-        }else if(id== R.id.action_Alterar)//Alterar nome do treino
-            renamePractice();
+        }//else if(id== R.id.action_Alterar)//Alterar nome do treino
+          //  renamePractice();
         return super.onOptionsItemSelected(item);
     }
 

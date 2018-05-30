@@ -5,4 +5,8 @@
     <string name="alterar_nome_do_treino">Alterar nome do treino</string>
     <string name="eliminar_treino">Eliminar treino</string>
     <string name="adicionar_treino">Adicionar treino</string>
+    <string name="data">Data</string>
+    <string name="name">Name</string>
+    <string name="n_repeti_es">Nº Repetições</string>
+    <string name="nome_exerc_cio">Nome Exercício</string>
 </resources>

@@ -1,5 +1,6 @@
 package pt.ipg.gestortreinos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,7 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener{
@@ -64,11 +67,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         int tag = id;
         b1 = new Button (MainActivity.this);
         b1.setId(id);
-        b1.setText(button_names[id+1]);
+        b1.setText(button_names[id]);
         b1.setTag(tag);
         parent.addView(b1);
         b1.setOnClickListener(MainActivity.this);
-        id++;
+        //id++;
         //Toast.makeText(getApplicationContext(),""+id,Toast.LENGTH_SHORT ).show();
         //Erro com o height do linearlayout:Não aparece os primeiros butões
 
@@ -80,12 +83,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
         if(tag.equals("0")){
             Toast.makeText(getApplicationContext(),"Treino 1",Toast.LENGTH_SHORT ).show();
-            //abrir a TreinoActivity
+            showTreinos();//abrir a TreinoActivity
+
         }else if(tag.equals("1")){
+            showTreinos();
             Toast.makeText(getApplicationContext(),"Treino 2",Toast.LENGTH_SHORT ).show();
         }else if(tag.equals("2")){
+            showTreinos();
             Toast.makeText(getApplicationContext(),"Treino 3",Toast.LENGTH_SHORT ).show();
         }
+
+    }
+
+    private void showTreinos(){
+    Intent intent = new Intent(this, TreinoActivity.class);
+
+        EditText editTextData = (EditText) findViewById(R.id.editTextData);
+
+        EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
+        EditText editTextRep = (EditText) findViewById(R.id.editTextRep);
+        EditText editTextSerie = (EditText) findViewById(R.id.editTextSerie);
+
+        TextView textView_Total = (TextView) findViewById(R.id.textView_Total);
+
+
+        startActivity(intent);
+
 
     }
 }

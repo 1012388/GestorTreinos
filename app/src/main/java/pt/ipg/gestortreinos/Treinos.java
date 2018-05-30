@@ -1,5 +1,7 @@
 package pt.ipg.gestortreinos;
 
+import java.util.Date;
+
 public class Treinos {
   /*  Treino
 		-Duração
@@ -23,5 +25,23 @@ Main activity vai ser a primeira atividade que o utilizador vê.
 * Isto vai ser implementado por botões que estarão no menu
 *
 * */
+    private Date data;//DD(1 a 31)|MM(0 a 11)|YYYY(0 a 8099) year + 1900
+    private String exercicio;
+    private int repeticoes;
+    private int series;
+    private int total_Reps = 0;
+
+    public Treinos(Date data, String exercicio, int reps, int series, int total) {
+        this.data = data;
+        this.exercicio = exercicio;
+        this.repeticoes = reps;
+        this.series = series;
+        this.total_Reps = total;
+    }
+
+    public int getRepeticoes(int repeticoes,int series){
+        return total_Reps = repeticoes*series; //Formula:int total=int Rep da série 1 + int Rep da série 2+...int Rep da série n
+    }
+
 
 }
