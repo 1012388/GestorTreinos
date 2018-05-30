@@ -7,23 +7,25 @@ public class DBTableTreino implements BaseColumns {
 
     private SQLiteDatabase db;
 
-    public DBTableTreino(SQLiteDatabase db){
+    public DBTableTreino(SQLiteDatabase db) {
 
     }
 
-    public void create(){
+    public void create() {
         db.execSQL(
                 "CREATE TABLE treinos (" +
-                        "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "REPETICOES INTEGER NOT NULL," +
-                        "EXERCICIO TEXT NOT NULL," +
-                        "PESO INTEGER NOT NULL"+
+                        "id_treino INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "repeticoes INTEGER NOT NULL," +
+                        "exercicio TEXT NOT NULL," +
+                        "peso INTEGER NOT NULL," +
+                        "id_dia INTEGER ," +
+                        "FOREIGN KEY (id_dia) REFERENCES " +
+                        "diasSemana" +
+                        "(" +
+                        "id" +
+                        ")" +
                         ")"
         );
     }
-
-
-    //Tabel id:Número do treino
-
 }
 
