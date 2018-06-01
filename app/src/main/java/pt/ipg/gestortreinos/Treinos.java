@@ -28,10 +28,10 @@ public class Treinos {
 
 
     private int idTreino;
-    private int dia;
     private String exercicio;
     private int repeticoes;
     private int series;
+    private int pesoUsado;
     private int total_Reps = 0;
 
     public Treinos(int idTreino, String exercicio, int reps, int series, int total) {
@@ -42,6 +42,13 @@ public class Treinos {
         this.total_Reps = total;
     }
 
+    public int getPesoUsado() {
+        return pesoUsado;
+    }
+
+    public void setPesoUsado(int pesoUsado) {
+        this.pesoUsado = pesoUsado;
+    }
 
     public int getId() {
         return idTreino;
@@ -49,14 +56,6 @@ public class Treinos {
 
     public void setId(int idTreino) {
         this.idTreino = idTreino;
-    }
-
-    public int getDia() {
-        return dia;
-    }
-
-    public void setDia(int dia) {
-        this.dia = dia;
     }
 
     public String getExercicio() {
@@ -83,9 +82,11 @@ public class Treinos {
         this.series = series;
     }
 
-    public int getRepeticoes(int repeticoes,int series){
+    public int setTotal_Reps(int repeticoes,int series){
         return total_Reps = repeticoes*series; //Formula:int total=int Rep da série 1 + int Rep da série 2+...int Rep da série n
     }
 
-
+    public void getTotal_Reps(int total_Reps) {
+        this.total_Reps = total_Reps;
+    }
 }
