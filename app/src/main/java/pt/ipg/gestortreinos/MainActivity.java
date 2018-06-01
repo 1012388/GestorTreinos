@@ -2,6 +2,8 @@ package pt.ipg.gestortreinos;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener{
-    LinearLayout parent;
-    Button b1;
+    CoordinatorLayout layoutMainParent;
+    private  Button b1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +64,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         //Create a new button. The button will intent to new activity.
         //That ativity will be to create a new training report
         String[]button_names = {"Treino 1","Treino 2","Treino 3"};
-        LinearLayout parent = (LinearLayout) findViewById(R.id.l1_parent);
+        //LinearLayout parent = (LinearLayout) findViewById(R.id.l1_parent);
+        layoutMainParent = (CoordinatorLayout) findViewById(R.id.layoutMainParent);
         int id = 0;
         int tag = id;
         b1 = new Button (MainActivity.this);
         b1.setId(id);
         b1.setText(button_names[id]);
         b1.setTag(tag);
-        parent.addView(b1);
+        layoutMainParent.addView(b1);
         b1.setOnClickListener(MainActivity.this);
         //id++;
         //Toast.makeText(getApplicationContext(),""+id,Toast.LENGTH_SHORT ).show();
@@ -101,10 +104,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         EditText editTextData = (EditText) findViewById(R.id.editTextData);
 
         EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
+
         EditText editTextRep = (EditText) findViewById(R.id.editTextRep);
+
         EditText editTextSerie = (EditText) findViewById(R.id.editTextSerie);
 
         TextView textView_Total = (TextView) findViewById(R.id.textView_Total);
+
 
 
         startActivity(intent);

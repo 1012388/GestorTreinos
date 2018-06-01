@@ -2,8 +2,10 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutMainParent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -21,13 +23,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <!-- <LinearLayout
         android:id="@+id/l1_parent"
         android:layout_width="match_parent"
         android:layout_height="569dp"
-        android:orientation="vertical">
+        >
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
     <android.support.design.widget.FloatingActionButton
@@ -36,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" /><!--Ir à procura de um sinal (+)  -->
+        app:backgroundTint="@android:color/holo_orange_light"
+        app:srcCompat="@android:drawable/ic_menu_add" /><!--Ir à procura de um sinal (+)  -->
 
 
 </android.support.design.widget.CoordinatorLayout>

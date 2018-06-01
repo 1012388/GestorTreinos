@@ -2,6 +2,7 @@ package pt.ipg.gestortreinos;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class TreinoActivity extends AppCompatActivity {
+    public int id =0;
+    private EditText EditText1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +59,31 @@ public class TreinoActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if(id == R.id.action_Eliminar){//Eliminar treino
-            deletePractice();
-        }//else if(id== R.id.action_Alterar)//Alterar nome do treino
-          //  renamePractice();
+            deleteTreino();
+        }else if(id== R.id.action_AdicionarEx) {//Alterar nome do treino
+            adicionarExercicio();
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    private void deletePractice() {
+    private void adicionarExercicio() {
+        String[]field_names = {"Exercicio","Peso","Repetições","Séries","Total Repetiçoes"};
+        //LinearLayout parent = (LinearLayout) findViewById(R.id.l1_parent);
+        CoordinatorLayout layoutTreinoParent = (CoordinatorLayout) findViewById(R.id.layoutTreinoParent);
+
+        for (int i = 0; i <4 ; i++) {
+            int tag = id;
+            EditText1 = new EditText(TreinoActivity.this);
+            EditText1.setId(id);
+            EditText1.setText("");
+            EditText1.setTag(tag);
+            layoutTreinoParent.addView(EditText1);
+
+        }
+
+    }
+
+    private void deleteTreino() {
         //eliminar botão escolhido
 
         /*Algoritmo para eliminar botão:
