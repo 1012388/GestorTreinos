@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutMainParent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -23,14 +23,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!-- <LinearLayout
+    <LinearLayout
         android:id="@+id/l1_parent"
         android:layout_width="match_parent"
-        android:layout_height="569dp"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
 
-    </LinearLayout>-->
-
+    <include layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

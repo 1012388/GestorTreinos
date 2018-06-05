@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener{
+    private int conta=0;
     CoordinatorLayout layoutMainParent;
     private  Button b1;
+    int tag_id = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                   //      .setAction("Action", null).show();
-            createNewPractice();
+                Button buttonTreino = (Button) findViewById(R.id.buttonTreino);
+                createNewPractice();
+
 
             }
         });
@@ -63,31 +67,30 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     private void createNewPractice() {
         //Create a new button. The button will intent to new activity.
         //That ativity will be to create a new training report
-        String[]button_names = {"Treino 1","Treino 2","Treino 3"};
-        //LinearLayout parent = (LinearLayout) findViewById(R.id.l1_parent);
-        layoutMainParent = (CoordinatorLayout) findViewById(R.id.layoutMainParent);
-        int id = 0;
-        int tag = id;
-        b1 = new Button (MainActivity.this);
-        b1.setId(id);
-        b1.setText(button_names[id]);
-        b1.setTag(tag);
-        layoutMainParent.addView(b1);
-        b1.setOnClickListener(MainActivity.this);
-        //id++;
-        //Toast.makeText(getApplicationContext(),""+id,Toast.LENGTH_SHORT ).show();
-        //Erro com o height do linearlayout:Não aparece os primeiros butões
 
+        LinearLayout parent = (LinearLayout) findViewById(R.id.l1_parent);
+
+        String[]button_names = {"Treino 1","Treino 2","Treino 3"};
+        b1 = new Button (MainActivity.this);
+        conta=tag_id;
+        b1.setId(tag_id);
+        b1.setText(button_names[tag_id]);
+
+        b1.setTag(tag_id);
+        parent.addView(b1);
+        b1.setOnClickListener(MainActivity.this);
+        //tag_id++;
     }
 
     @Override
     public void onClick(View v) {
+
+        conta++;
         String tag = v.getTag().toString();
 
         if(tag.equals("0")){
             Toast.makeText(getApplicationContext(),"Treino 1",Toast.LENGTH_SHORT ).show();
             showTreinos();//abrir a TreinoActivity
-
         }else if(tag.equals("1")){
             showTreinos();
             Toast.makeText(getApplicationContext(),"Treino 2",Toast.LENGTH_SHORT ).show();
@@ -95,25 +98,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             showTreinos();
             Toast.makeText(getApplicationContext(),"Treino 3",Toast.LENGTH_SHORT ).show();
         }
-
     }
 
     private void showTreinos(){
-    Intent intent = new Intent(this, TreinoActivity.class);
+        Toast.makeText(getApplicationContext(),"Treino 2",Toast.LENGTH_SHORT ).show();
+        Intent intent = new Intent(this, TreinoActivity.class);
 
-        EditText editTextData = (EditText) findViewById(R.id.editTextData);
+    //Passar para o Treino Actitivity o valor de quantas vezes o botão foi clicado
 
-        EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
+        intent.putExtra("Vezes",conta);//contador serve para saber o número do id da tag para criar os botões por ordem crescente
 
-        EditText editTextRep = (EditText) findViewById(R.id.editTextRep);
+    /*
 
-        EditText editTextSerie = (EditText) findViewById(R.id.editTextSerie);
+        intent.putExtra(TREINO_ID,idTreino);
+        intent.putExtra(NOME_DO_EXERCICIO,exercicio);
+        intent.putExtra(NUMERO_DE_REPETICOES,repeticoes);
+        intent.putExtra(NUMERO_DE_SERIES,series);
+        intent.putExtra(NUMERO_DO_PESO_USADO,pesoUsado);
 
-        TextView textView_Total = (TextView) findViewById(R.id.textView_Total);
 
+    */
 
-
-        startActivity(intent);
+        //startActivity(intent);
 
 
     }

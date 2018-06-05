@@ -34,12 +34,11 @@ public class Treinos {
     private int pesoUsado;
     private int total_Reps = 0;
 
-    public Treinos(int idTreino, String exercicio, int reps, int series, int total) {
+    public Treinos(int idTreino, String exercicio, int reps, int series) {
         this.idTreino = idTreino;
         this.exercicio = exercicio;
         this.repeticoes = reps;
         this.series = series;
-        this.total_Reps = total;
     }
 
     public int getPesoUsado() {
@@ -82,11 +81,9 @@ public class Treinos {
         this.series = series;
     }
 
-    public int setTotal_Reps(int repeticoes,int series){
+    public int getTotal_Reps(int repeticoes,int series){
         return total_Reps = repeticoes*series; //Formula:int total=int Rep da série 1 + int Rep da série 2+...int Rep da série n
     }
 
-    public void getTotal_Reps(int total_Reps) {
-        this.total_Reps = total_Reps;
-    }
+
 }
