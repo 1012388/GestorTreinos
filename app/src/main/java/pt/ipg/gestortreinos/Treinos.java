@@ -45,40 +45,45 @@ public class Treinos {
         return pesoUsado;
     }
 
-    public void setPesoUsado(int pesoUsado) {
-        this.pesoUsado = pesoUsado;
+    public int setPesoUsado(int pesoUsado) {
+        return this.pesoUsado = pesoUsado;
     }
 
     public int getId() {
+
         return idTreino;
     }
 
-    public void setId(int idTreino) {
-        this.idTreino = idTreino;
+    public int setId(int idTreino) {
+
+        return this.idTreino = idTreino;
     }
 
     public String getExercicio() {
+
         return exercicio;
     }
 
-    public void setExercicio(String exercicio) {
-        this.exercicio = exercicio;
+    public String setExercicio(String exercicio) {
+       return this.exercicio = exercicio;
     }
 
     public int getRepeticoes() {
+
         return repeticoes;
     }
 
-    public void setRepeticoes(int repeticoes) {
-        this.repeticoes = repeticoes;
+    public int setRepeticoes(int repeticoes) {
+        return this.repeticoes = repeticoes;
     }
 
-    public int getSeries() {
+    public int getSeries()
+    {
         return series;
     }
 
-    public void setSeries(int series) {
-        this.series = series;
+    public int setSeries(int series) {
+        return this.series = series;
     }
 
     public int getTotal_Reps(int repeticoes,int series){

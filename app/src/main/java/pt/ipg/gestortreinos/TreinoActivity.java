@@ -7,9 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ public class TreinoActivity extends AppCompatActivity {
     public int id =0;
     private EditText EditText1;
     public Treinos treinos;
+    final ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,18 +157,29 @@ public class TreinoActivity extends AppCompatActivity {
     }
 
     private void adicionarExercicio() {
-        String[]field_names = {"Exercicio","Peso","Repetições","Séries","Total Repetiçoes"};
+        String[]field_names = {"Exercicio","Peso","Repetições","Séries","TotalRepetições"};
         //LinearLayout parent = (LinearLayout) findViewById(R.id.l1_parent);
         CoordinatorLayout layoutTreinoParent = (CoordinatorLayout) findViewById(R.id.layoutTreinoParent);
-
-        for (int i = 0; i <4 ; i++) {
-            int tag = id;
+        int tag = 0;
+        int total = treinos.getTotal_Reps(treinos.setRepeticoes(3),treinos.setSeries(3));//
+        for (int i = 0; i < 4 ; i++) {
+            tag = i;
             EditText1 = new EditText(TreinoActivity.this);
-            EditText1.setId(id);
-            EditText1.setText("");
+            EditText1.setId(i);
+            EditText1.setText(field_names[i]);
             EditText1.setTag(tag);
             layoutTreinoParent.addView(EditText1);
-
+            if (tag == 4) {
+                TextView TextView1 = new TextView(TreinoActivity.this);
+                TextView1.setLayoutParams(layoutParams);
+                TextView1.setText(field_names[tag]+":"+String.valueOf(total));
+            }
+        }
+        //editTextExercicio
+        if(EditText1.getId()== 0) {
+            EditText1.setInputType(InputType.TYPE_CLASS_TEXT);
+        } else{//editTextPeso,Reps e Series que são todos numeros
+            EditText1.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
 
     }
