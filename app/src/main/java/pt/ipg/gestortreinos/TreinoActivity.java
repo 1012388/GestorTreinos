@@ -27,9 +27,14 @@ public class TreinoActivity extends AppCompatActivity {
     public static final String NUMERO_DO_PESO_USADO = "Número do peso usado";
     public int id =0;
     private EditText EditText1;
-    public Treinos treinos;
+    Treinos treinos = new Treinos();
     final ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-
+    public int idTreino=0;
+    public String exercicio ="";
+    public int repeticoes=0;
+    public int series=0;
+    public int pesoUsado=0;
+    public int total_Reps = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,15 +42,89 @@ public class TreinoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
+        Intent intent = getIntent();
 
+        EditText editTextDia = (EditText) findViewById(R.id.editTextDia);
+        EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
+        EditText editTextRep = (EditText) findViewById(R.id.editTextRep);
+        EditText editTextSerie = (EditText) findViewById(R.id.editTextSerie);
+        EditText editTextPeso = (EditText) findViewById(R.id.editTextPeso);
+        TextView textView_Total = (TextView) findViewById(R.id.textView_Total);
+
+
+        try {
+            idTreino = Integer.parseInt(editTextDia.getText().toString());
+        } catch (NumberFormatException e) {
+            editTextDia.setError(DIA_INVALIDO);
+            editTextDia.requestFocus();
+            return;
+        }
+
+        try {
+            repeticoes = Integer.parseInt(editTextRep.getText().toString());
+        } catch (NumberFormatException e) {
+            editTextRep.setError(NUMERO_DE_REPETICOES_INVALIDO);
+            editTextRep.requestFocus();
+            return;
+        }
+
+        try {
+            series = Integer.parseInt(editTextSerie.getText().toString());
+        } catch (NumberFormatException e) {
+            editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
+            editTextSerie.requestFocus();
+            return;
+        }
+
+        try {
+            pesoUsado = Integer.parseInt(editTextPeso.getText().toString());
+        } catch (NumberFormatException e) {
+            editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
+            editTextPeso.requestFocus();
+            return;
+        }
+
+        if(idTreino < 0){
+            editTextDia.setError(DIA_INVALIDO);
+            editTextDia.requestFocus();
+            return;
+        }
+
+        if(repeticoes < 0 || repeticoes >999){
+            editTextRep.setError(NUMERO_DE_REPETICOES_INVALIDO);
+            editTextRep.requestFocus();
+            return;
+        }
+
+        if(series< 0 || series >99){
+            editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
+            editTextSerie.requestFocus();
+            return;
+        }
+
+
+        if(pesoUsado < 0 || pesoUsado>999){
+            editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
+            editTextPeso.requestFocus();
+            return;
+        }
+
+        if (idTreino == 0 || repeticoes == 0 || series == 0 ||pesoUsado == 0) {
+            finish();
+            return;
+        }
+
+        //Treinos treinos = new Treinos();
+
+        textView_Total.setText(String.format("%d",treinos.getTotal_Reps(repeticoes,series)));
         createTreino();
     }
 
@@ -128,7 +207,7 @@ public class TreinoActivity extends AppCompatActivity {
             return;
         }
 
-        treinos = new Treinos(idTreino, exercicio, repeticoes, series);
+        Treinos treinos = new Treinos();//(idTreino, exercicio, repeticoes, series);
 
         textView_Total.setText(String.format("%d",treinos.getTotal_Reps(repeticoes,series)));
     }
@@ -149,9 +228,10 @@ public class TreinoActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if(id == R.id.action_Eliminar){//Eliminar treino
-            deleteTreino();
+           // deleteTreino();
+
         }else if(id== R.id.action_AdicionarEx) {//Alterar nome do treino
-            adicionarExercicio();
+            //adicionarExercicio();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -191,7 +271,7 @@ public class TreinoActivity extends AppCompatActivity {
             Selecionar botão,ou seja criar uma check box para o botão
                 Torná-lo invisível
          */
-    }
+   }
 
     private void  renamePractice(){
         //alterar o nome do botão

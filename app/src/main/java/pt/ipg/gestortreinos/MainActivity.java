@@ -18,11 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener{
-    private int conta=0;
+public class MainActivity extends AppCompatActivity {//implements OnClickListener{
+    public int conta =0;
     CoordinatorLayout layoutMainParent;
     private  Button b1;
-    int tag_id = 0;
+    int tag_id = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,19 +31,58 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-       fab.setOnClickListener(new OnClickListener() {
+        fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                  //      .setAction("Action", null).show();
-                Button buttonTreino = (Button) findViewById(R.id.buttonTreino);
-                createNewPractice();
+                Snackbar.make(view, "Adicionar treino:"+tag_id, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                createNewPratice();
+                //tag_id++;
+            }
+
+        });
+
+       /* Button buttonTreino = (Button) findViewById(R.id.buttonTreino);
+        buttonTreino.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "O button Treino 1 está a funcionar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                showTreinos();
+            }
+        });*/
 
 
+
+    }
+
+    private void createNewPratice() {//Cria um botão que ao ser presionado abre a atividade Treinos
+        ConstraintLayout constraintLayout= (ConstraintLayout) findViewById(R.id.constraintLayout);
+
+        String[]button_names = {"Treino 1","Treino 2","Treino 3"};
+        b1 = new Button(MainActivity.this);
+        tag_id = conta;
+        b1.setId(tag_id);
+        b1.setText(button_names[tag_id]);
+
+        b1.setTag(tag_id);
+
+
+
+        b1.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Tag"+tag_id, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                showTreinos();//Abrir Treino Activity
+
+                seClicado(b1);
             }
         });
+        tag_id++;
+        constraintLayout.addView(b1);//,params);
     }
-    @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -59,54 +98,33 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_Adicionar) {//Adicionar treino
-            createNewPractice();
+            createNewPratice();
+            Toast.makeText(getApplicationContext(),"O botão adicionar está a funcionar",Toast.LENGTH_SHORT ).show();
+            //tag_id++;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void createNewPractice() {
-        //Create a new button. The button will intent to new activity.
-        //That ativity will be to create a new training report
 
-        LinearLayout parent = (LinearLayout) findViewById(R.id.l1_parent);
 
-        String[]button_names = {"Treino 1","Treino 2","Treino 3"};
-        b1 = new Button (MainActivity.this);
-        conta=tag_id;
-        b1.setId(tag_id);
-        b1.setText(button_names[tag_id]);
-
-        b1.setTag(tag_id);
-        parent.addView(b1);
-        b1.setOnClickListener(MainActivity.this);
-        //tag_id++;
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        conta++;
-        String tag = v.getTag().toString();
-
-        if(tag.equals("0")){
-            Toast.makeText(getApplicationContext(),"Treino 1",Toast.LENGTH_SHORT ).show();
-            showTreinos();//abrir a TreinoActivity
-        }else if(tag.equals("1")){
-            showTreinos();
-            Toast.makeText(getApplicationContext(),"Treino 2",Toast.LENGTH_SHORT ).show();
-        }else if(tag.equals("2")){
-            showTreinos();
-            Toast.makeText(getApplicationContext(),"Treino 3",Toast.LENGTH_SHORT ).show();
-        }
-    }
+   public void seClicado(View v) {
+       String tag = v.getTag().toString();
+       for (int i = 0; i < Integer.parseInt(tag); i++) {
+           if (tag.equals(i)) {
+               Toast.makeText(getApplicationContext(), "Treino" + i, Toast.LENGTH_SHORT).show();
+               conta++;
+               //abre a TreinoActivity com e passa para a atividade o valor da tag
+           }
+       }
+   }
 
     private void showTreinos(){
-        Toast.makeText(getApplicationContext(),"Treino 2",Toast.LENGTH_SHORT ).show();
-        Intent intent = new Intent(this, TreinoActivity.class);
+        //Toast.makeText(getApplicationContext(),"Treino 2",Toast.LENGTH_SHORT ).show();
+
 
     //Passar para o Treino Actitivity o valor de quantas vezes o botão foi clicado
 
-        intent.putExtra("Vezes",conta);//contador serve para saber o número do id da tag para criar os botões por ordem crescente
+
 
     /*
 
@@ -118,9 +136,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
 
     */
-
-        //startActivity(intent);
-
-
+        Intent intent = new Intent(this, TreinoActivity.class);
+        //intent.putExtra("Vezes",getContaVezes());//contador serve para saber o número do id da tag para criar os botões por ordem crescente
+        startActivity(intent);
     }
 }
