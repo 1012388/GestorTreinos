@@ -147,7 +147,4 @@ public class TreinoDBTest {
     private Context getContext() {
         return InstrumentationRegistry.getTargetContext();
     }
-
-
-
 }

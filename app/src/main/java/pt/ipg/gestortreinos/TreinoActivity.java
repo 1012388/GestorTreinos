@@ -46,11 +46,18 @@ public class TreinoActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "A guardar...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                /*Algoritmo para guardar dados:
+                * Se existirem dados na coluna referente ao treino do momento então:
+                *   Actualizar os dados;
+                * Se não, então:
+                *   Inserir os dados;
+                *   */
+                createTreino();
             }
         });
-        createTreino();
+
     }
 
     private void createTreino() {
@@ -102,35 +109,35 @@ public class TreinoActivity extends AppCompatActivity {
             return;
         }
 
-        if(idTreino < 0){
+        if(idTreino <= 0){
             editTextDia.setError(DIA_INVALIDO);
             editTextDia.requestFocus();
             return;
         }
-
-        if(repeticoes < 0 || repeticoes >999){
+        
+        if(pesoUsado <= 0 || pesoUsado > 999){
+            editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
+            editTextPeso.requestFocus();
+            return;
+        }
+        if(repeticoes <= 0 || repeticoes > 999){
             editTextRep.setError(NUMERO_DE_REPETICOES_INVALIDO);
             editTextRep.requestFocus();
             return;
         }
 
-        if(series< 0 || series >99){
+        if(series <= 0 || series > 99){
             editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
             editTextSerie.requestFocus();
             return;
         }
 
 
-        if(pesoUsado < 0 || pesoUsado>999){
-            editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
-            editTextPeso.requestFocus();
-            return;
-        }
 
-        if (idTreino == 0 || repeticoes == 0 || series == 0 ||pesoUsado == 0) {
+        /*if (idTreino == 0 || repeticoes == 0 || series == 0 ||pesoUsado == 0) {
             finish();
             return;
-        }
+        }*/
 
         Treinos treinos = new Treinos();//(idTreino, exercicio, repeticoes, series);
 
