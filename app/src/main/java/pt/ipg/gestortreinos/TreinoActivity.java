@@ -42,89 +42,14 @@ public class TreinoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });*/
-        Intent intent = getIntent();
-
-        EditText editTextDia = (EditText) findViewById(R.id.editTextDia);
-        EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
-        EditText editTextRep = (EditText) findViewById(R.id.editTextRep);
-        EditText editTextSerie = (EditText) findViewById(R.id.editTextSerie);
-        EditText editTextPeso = (EditText) findViewById(R.id.editTextPeso);
-        TextView textView_Total = (TextView) findViewById(R.id.textView_Total);
-
-
-        try {
-            idTreino = Integer.parseInt(editTextDia.getText().toString());
-        } catch (NumberFormatException e) {
-            editTextDia.setError(DIA_INVALIDO);
-            editTextDia.requestFocus();
-            return;
-        }
-
-        try {
-            repeticoes = Integer.parseInt(editTextRep.getText().toString());
-        } catch (NumberFormatException e) {
-            editTextRep.setError(NUMERO_DE_REPETICOES_INVALIDO);
-            editTextRep.requestFocus();
-            return;
-        }
-
-        try {
-            series = Integer.parseInt(editTextSerie.getText().toString());
-        } catch (NumberFormatException e) {
-            editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
-            editTextSerie.requestFocus();
-            return;
-        }
-
-        try {
-            pesoUsado = Integer.parseInt(editTextPeso.getText().toString());
-        } catch (NumberFormatException e) {
-            editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
-            editTextPeso.requestFocus();
-            return;
-        }
-
-        if(idTreino < 0){
-            editTextDia.setError(DIA_INVALIDO);
-            editTextDia.requestFocus();
-            return;
-        }
-
-        if(repeticoes < 0 || repeticoes >999){
-            editTextRep.setError(NUMERO_DE_REPETICOES_INVALIDO);
-            editTextRep.requestFocus();
-            return;
-        }
-
-        if(series< 0 || series >99){
-            editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
-            editTextSerie.requestFocus();
-            return;
-        }
-
-
-        if(pesoUsado < 0 || pesoUsado>999){
-            editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
-            editTextPeso.requestFocus();
-            return;
-        }
-
-        if (idTreino == 0 || repeticoes == 0 || series == 0 ||pesoUsado == 0) {
-            finish();
-            return;
-        }
-
-        //Treinos treinos = new Treinos();
-
-        textView_Total.setText(String.format("%d",treinos.getTotal_Reps(repeticoes,series)));
+        });
         createTreino();
     }
 
@@ -236,10 +161,10 @@ public class TreinoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void adicionarExercicio() {
+   /* private void adicionarExercicio() {
         String[]field_names = {"Exercicio","Peso","Repetições","Séries","TotalRepetições"};
-        //LinearLayout parent = (LinearLayout) findViewById(R.id.l1_parent);
-        CoordinatorLayout layoutTreinoParent = (CoordinatorLayout) findViewById(R.id.layoutTreinoParent);
+        LinearLayout linearLayoutTreino = (LinearLayout) findViewById(R.id.linearLayoutTreino);
+        //CoordinatorLayout layoutTreinoParent = (CoordinatorLayout) findViewById(R.id.layoutTreinoParent);
         int tag = 0;
         int total = treinos.getTotal_Reps(treinos.setRepeticoes(3),treinos.setSeries(3));//
         for (int i = 0; i < 4 ; i++) {
@@ -248,7 +173,7 @@ public class TreinoActivity extends AppCompatActivity {
             EditText1.setId(i);
             EditText1.setText(field_names[i]);
             EditText1.setTag(tag);
-            layoutTreinoParent.addView(EditText1);
+            linearLayoutTreino.addView(EditText1);
             if (tag == 4) {
                 TextView TextView1 = new TextView(TreinoActivity.this);
                 TextView1.setLayoutParams(layoutParams);
@@ -262,7 +187,7 @@ public class TreinoActivity extends AppCompatActivity {
             EditText1.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
 
-    }
+    }*/
 
     private void deleteTreino() {
         //eliminar botão escolhido

@@ -15,13 +15,12 @@ public class DBTableTreino implements BaseColumns {
     public static final String PESO_USADO = "pesoUsado";
     public static final String SERIES = "series";
     public static final String TOTAL_REPS = "total_Reps";
+    public static final String [] ALL_COLUMNS = new String[] { _ID, REPETICOES, EXERCICIO, SERIES, TOTAL_REPS};
 
     private SQLiteDatabase db;
 
-
-
     public DBTableTreino(SQLiteDatabase db) {
-
+        this.db = db;
     }
 
     public void create() {
@@ -91,7 +90,7 @@ public class DBTableTreino implements BaseColumns {
      *         whereClause.
      */
 
-    public int delete(String table,String whereClause,String[] whereArgs){
+    public int delete(String whereClause,String[] whereArgs){
         return db.delete(DATABASENAME_T,whereClause,whereArgs);
     }
 

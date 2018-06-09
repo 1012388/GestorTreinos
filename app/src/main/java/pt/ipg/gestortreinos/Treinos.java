@@ -25,22 +25,18 @@ public class Treinos {
     * Isto vai ser implementado por botões que estarão no menu
     *
     * */
-
-
     private int idTreino;
     private String exercicio;
     private int repeticoes;
     private int series;
     private int pesoUsado;
     private int total_Reps = 0;
-/*
-    public Treinos(int idTreino, String exercicio, int reps, int series) {
-     // public Treinos(){
-        this.idTreino = idTreino;
-        this.exercicio = exercicio;
-        this.repeticoes = repeticoes;
-        this.series = series;
-    }*/
+
+    public void setIdDia(int idDia) {
+        this.idDia = idDia;
+    }
+
+    private int idDia;
 
     public int getPesoUsado() {
         return pesoUsado;
@@ -51,17 +47,14 @@ public class Treinos {
     }
 
     public int getId() {
-
         return idTreino;
     }
 
     public int setId(int idTreino) {
-
         return this.idTreino = idTreino;
     }
 
     public String getExercicio() {
-
         return exercicio;
     }
 
@@ -70,7 +63,6 @@ public class Treinos {
     }
 
     public int getRepeticoes() {
-
         return repeticoes;
     }
 

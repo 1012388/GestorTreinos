@@ -2,17 +2,17 @@ package pt.ipg.gestortreinos;
 
 public class DiasSemana {
 
-    private int dia;//ID
+    private int idDia;//ID
     private String Grupo_Muscular;
     private String nome_dia;
 
 
-    public int getDia() {
-        return dia;
+    public int getIdDia() {
+        return idDia;
     }
 
-    public void setDia(int dia) {
-        this.dia = dia;
+    public void setIdDia(int idDia) {
+        this.idDia = idDia;
     }
 
     public String getGrupo_Muscular() {
