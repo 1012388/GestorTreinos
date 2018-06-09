@@ -34,7 +34,7 @@ public class TreinoDBTest {
         Context appContext = getContext();
 
         //assertEquals("pt.ipg.gestortreinos", appContext.getPackageName());
-        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(appContext);
+         DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(appContext);
          SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();//Abrir a bd para saber se existe
 
         assertTrue("Couldnt open/create db",db.isOpen());
