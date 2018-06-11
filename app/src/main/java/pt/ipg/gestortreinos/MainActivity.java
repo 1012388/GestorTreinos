@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -19,10 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {//implements OnClickListener{
-    public int conta =0;
-    CoordinatorLayout layoutMainParent;
+    public int conta = 0;
     private  Button b1;
-    int tag_id = 1;
+    int tag_id = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,43 +34,30 @@ public class MainActivity extends AppCompatActivity {//implements OnClickListene
         fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Adicionar treino:"+conta, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                createNewPratice();
-                //tag_id++;
+                seClicado(view);
+                createNewPraticeButton();
             }
 
         });
     }
 
-    private void createNewPratice() {//Cria um botão que ao ser presionado abre a atividade Treinos
-        ConstraintLayout constraintLayout= (ConstraintLayout) findViewById(R.id.constraintLayout);
+    private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
 
-        String[]button_names = {"Treino 1","Treino 2","Treino 3"};
         b1 = new Button(MainActivity.this);
         tag_id = conta;
         b1.setId(tag_id);
-        b1.setText(button_names[tag_id]);
+        b1.setText("Treino" + tag_id);
         b1.setTag(tag_id);
-
-
-
         b1.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View view) {
-                String tag = view.getTag().toString();
-                Snackbar.make(view, "Tag" + tag, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                /*for (int i = 0; i < Integer.parseInt(tag); i++) {
-                    Snackbar.make(view, "Vezes clicado:" + conta, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    conta++;
-                }*/
                 showTreinos();//Abrir Treino Activity
              }
         });
+
         tag_id++;
-        constraintLayout.addView(b1);//,params);
+        linearLayout.addView(b1);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,44 +75,32 @@ public class MainActivity extends AppCompatActivity {//implements OnClickListene
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_Adicionar) {//Adicionar treino
-            createNewPratice();
-            Toast.makeText(getApplicationContext(),"O botão adicionar está a funcionar",Toast.LENGTH_SHORT ).show();
-            //tag_id++;
+            createNewPraticeButton();
+            //conta++;
+            //Toast.makeText(getApplicationContext(),"Adicionar treino:"+conta,Toast.LENGTH_SHORT ).show();
+
         }
         return super.onOptionsItemSelected(item);
     }
 
 
+    public void seClicado(View v) {
+        conta++;
+        Snackbar.make(v, "Adicionar treino:" + conta, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
 
-   public int seClicado(View v) {
-       String tag = v.getTag().toString();
-       for (int i = 0; i < Integer.parseInt(tag); i++) {
-           Snackbar.make(v, "Vezes clicado:"+conta, Snackbar.LENGTH_LONG)
-                   .setAction("Action", null).show();
-           conta++;
-           /*if (tag.equals(i)) {
-               Toast.makeText(getApplicationContext(), "Treino" + i, Toast.LENGTH_SHORT).show();
-               conta++;
-               //abre a TreinoActivity com e passa para a atividade o valor da tag
-           }*/
-       }
-    return conta;
+
+        //return conta;
     }
 
     private void showTreinos(){
     //Passar para o Treino Actitivity o valor de quantas vezes o botão foi clicado
-
-
-
     /*
-
         intent.putExtra(TREINO_ID,idTreino);
         intent.putExtra(NOME_DO_EXERCICIO,exercicio);
         intent.putExtra(NUMERO_DE_REPETICOES,repeticoes);
         intent.putExtra(NUMERO_DE_SERIES,series);
         intent.putExtra(NUMERO_DO_PESO_USADO,pesoUsado);
-
-
     */
         Intent intent = new Intent(this, TreinoActivity.class);
         //intent.putExtra("Vezes",getContaVezes());//contador serve para saber o número do id da tag para criar os botões por ordem crescente

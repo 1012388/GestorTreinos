@@ -165,6 +165,7 @@ public class TreinoActivity extends AppCompatActivity {
                                     ,new String[] {String.valueOf(treinos.getId())});
         }
 */
+        //TODO em textView_Total em vez de estar treinos.getTotal_Reps,ir a buscar o total à base de dados.
     textView_Total.setText("Total de Repetições:"+treinos.getTotal_Reps(repeticoes,series));
     }
 
