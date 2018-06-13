@@ -1,34 +1,48 @@
+
 package pt.ipg.gestortreinos;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListView;
+
+import android.widget.ScrollView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {//implements OnClickListener{
     public int conta = 0;
     private  Button b1;
     int tag_id = 0;
+
+    //ListView listView;
+    //ArrayList<Button> arrayList = new ArrayList<Button>();
+
+    //ArrayAdapter <Button> adapter = new ArrayAdapter<Button>(MainActivity.this,android.R.layout.simple_list_item_1,arrayList);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //listView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new OnClickListener() {
@@ -43,21 +57,31 @@ public class MainActivity extends AppCompatActivity {//implements OnClickListene
 
     private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scroolView);
 
+        //ListView listView = (ListView) findViewById(R.id.listView);
+        String[] buttonName = {"Treino"};
         b1 = new Button(MainActivity.this);
         tag_id = conta;
         b1.setId(tag_id);
         b1.setText("Treino" + tag_id);
         b1.setTag(tag_id);
+        tag_id++;
         b1.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View view) {
                 showTreinos();//Abrir Treino Activity
-             }
+
+            }
         });
 
-        tag_id++;
+        //scrollView.addView(b1);
+
         linearLayout.addView(b1);
+
+        //arrayList.add(b1);//Adicionar cada butão criado ao arrayList
+        //adapter.notifyDataSetChanged();
+        //listView.setAdapter(adapter);//to associate an adapter with the list
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
