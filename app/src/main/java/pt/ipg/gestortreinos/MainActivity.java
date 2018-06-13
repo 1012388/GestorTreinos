@@ -100,11 +100,10 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         //TODO: TIRAR ESTA MERDA!! ESTÁ A DAR CONFLITO PORQUE CONTA FICA DIFERENTE
-        if (id == R.id.action_Adicionar) {//Adicionar treino
-            createNewPraticeButton();
+        if (id == R.id.action_Eliminar) {//Adicionar treino
+            //deleteTreinoButton();
             //conta++;
-            //Toast.makeText(getApplicationContext(),"Adicionar treino:"+conta,Toast.LENGTH_SHORT ).show();
-
+            Toast.makeText(getApplicationContext(), "A eliminar o treino:" + tag_id, Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -129,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(NUMERO_DO_PESO_USADO,pesoUsado);
     */
         Intent intent = new Intent(this, TreinoActivity.class);
-        intent.putExtra(VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO, conta);//contador serve para saber o número do id da tag para criar os botões por ordem crescente
+        
         startActivity(intent);
     }
+
+
 }

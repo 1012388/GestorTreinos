@@ -143,24 +143,6 @@ public class TreinoActivity extends AppCompatActivity {
             editTextSerie.requestFocus();
             return;
         }
-
-/*
-        DBTableTreino.getContentValues(treinos);
-
-        Cursor query_reps = dbTableTreino.query(REPETICOES_COLUMN,DBTableTreino._ID+"=?"
-                ,new String[] {String.valueOf(treinos.getId())},null,null,null);
-
-        Cursor query_series = dbTableTreino.query(SERIES_COLUMN,DBTableTreino._ID+"=?"
-               ,new String[] {String.valueOf(treinos.getId())},null,null,null);
-
-
-
-        if(treinos.getTotal_Reps(query_reps.getInt(3),query_series.getInt(4)) !=0){
-                values.put("Total de Repetições",total_Reps);
-                dbTableTreino.update(values,DBTableTreino._ID+"=?"
-                                    ,new String[] {String.valueOf(treinos.getId())});
-        }
-*/
         //TODO em textView_Total em vez de estar treinos.getTotal_Reps,ir a buscar o total à base de dados.
     textView_Total.setText("Total de Repetições:"+treinos.getTotal_Reps(repeticoes,series));
     }

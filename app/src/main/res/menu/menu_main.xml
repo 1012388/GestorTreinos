@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pt.ipg.gestortreinos.MainActivity">
     <item
-        android:id="@+id/action_Adicionar"
-        android:orderInCategory="101"
-        android:title="Adicionar treinos" />
-    <item
         android:id="@+id/action_Eliminar"
         android:orderInCategory="102"
         android:title="@string/eliminar_treino" />
