@@ -57,9 +57,10 @@ public class TreinoActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                createTreino();//Cria o treino e só depois dá a mensagem para guardar
                 Snackbar.make(view, "A guardar...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                   createTreino();
             }
         });
 
@@ -67,7 +68,9 @@ public class TreinoActivity extends AppCompatActivity {
 
     private void createTreino() {
         Intent intent = getIntent();
+        int treinoID = intent.getIntExtra(MainActivity.VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO, 0);
 
+        treinoID = idTreino;
         int idTreino = 0;
         String exercicio = "";
         int repeticoes = 0;
@@ -75,23 +78,16 @@ public class TreinoActivity extends AppCompatActivity {
         int pesoUsado = 0;
         int total_Reps = 0;
 
-        EditText editTextDia = (EditText) findViewById(R.id.editTextDia);
+        TextView textViewDia = (TextView) findViewById(R.id.textViewDia);
         EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
         EditText editTextRep = (EditText) findViewById(R.id.editTextRep);
         EditText editTextSerie = (EditText) findViewById(R.id.editTextSerie);
         EditText editTextPeso = (EditText) findViewById(R.id.editTextPeso);
         TextView textView_Total = (TextView) findViewById(R.id.textView_Total);
 
-        // TODO: 10/06/2018 VERIFICAR A ENTRADA NA BASE DE DADOS,PARA COMPARAR SE EXISTEM OS DADOS OU NÃO.
+        // TODO: 10/06/2018 VERIFICAR A ENTRADA NA BASE DE DADOS,PARA COMPARAR SE EXISTEM OS DADOS OU NÃO
+        textViewDia.setText("Treino:" + idTreino);
 
-
-        try {
-            idTreino = Integer.parseInt(editTextDia.getText().toString());
-        } catch (NumberFormatException e) {
-            editTextDia.setError(DIA_INVALIDO);
-            editTextDia.requestFocus();
-            return;
-        }
 
         try {
             pesoUsado = Integer.parseInt(editTextPeso.getText().toString());

@@ -25,7 +25,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {//implements OnClickListener{
+public class MainActivity extends AppCompatActivity {
+    public static final String VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO = "Vezes que clicado em adicionar treino";
     public int conta = 0;
     private  Button b1;
     int tag_id = 0;
@@ -57,10 +58,10 @@ public class MainActivity extends AppCompatActivity {//implements OnClickListene
 
     private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        ScrollView scrollView = (ScrollView) findViewById(R.id.scroolView);
+        //ScrollView scrollView = (ScrollView) findViewById(R.id.scroolView);
 
         //ListView listView = (ListView) findViewById(R.id.listView);
-        String[] buttonName = {"Treino"};
+        //String[] buttonName = {"Treino"};
         b1 = new Button(MainActivity.this);
         tag_id = conta;
         b1.setId(tag_id);
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {//implements OnClickListene
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        //TODO: TIRAR ESTA MERDA!! ESTÁ A DAR CONFLITO PORQUE CONTA FICA DIFERENTE
         if (id == R.id.action_Adicionar) {//Adicionar treino
             createNewPraticeButton();
             //conta++;
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity {//implements OnClickListene
         intent.putExtra(NUMERO_DO_PESO_USADO,pesoUsado);
     */
         Intent intent = new Intent(this, TreinoActivity.class);
-        //intent.putExtra("Vezes",getContaVezes());//contador serve para saber o número do id da tag para criar os botões por ordem crescente
+        intent.putExtra(VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO, conta);//contador serve para saber o número do id da tag para criar os botões por ordem crescente
         startActivity(intent);
     }
 }
