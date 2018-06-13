@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(NUMERO_DO_PESO_USADO,pesoUsado);
     */
         Intent intent = new Intent(this, TreinoActivity.class);
-        
+        intent.putExtra(VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO, conta);//contador serve para saber o número do id da tag para criar os botões por ordem crescente
         startActivity(intent);
     }
 
