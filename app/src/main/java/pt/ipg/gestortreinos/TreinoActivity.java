@@ -143,17 +143,28 @@ public class TreinoActivity extends AppCompatActivity {
             return;
         }
         //TODO em textView_Total em vez de estar treinos.getTotal_Reps,ir a buscar o total à tabela Treinos
-        ;
 
-        textView_Total.setText("Total de Repetições:" + getRepeticoesFromTable());
+
+        textView_Total.setText("Total de Repetições:" + getRepeticoesFromTable() * getSeriesFromTable());
         //textView_Total.setText("Total de Repetições:",dbTableTreino.query())
     }
 
+    private int getSeriesFromTable() {
+        int seriesFromTable = 0;
+
+        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
+        String query_reps = "SELECT " + DBTableTreino.SERIES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
+        db.rawQuery(query_reps, new String[]{String.valueOf(seriesFromTable)});
+        db.close();
+
+        return seriesFromTable;
+    }
 
     private int getRepeticoesFromTable() {
         int repeticoesFromTable = 0;
+
         SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-        String query_reps = "SELECT " + dbTableTreino.REPETICOES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
+        String query_reps = "SELECT " + DBTableTreino.REPETICOES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
         db.rawQuery(query_reps, new String[]{String.valueOf(repeticoesFromTable)});
         db.close();
 

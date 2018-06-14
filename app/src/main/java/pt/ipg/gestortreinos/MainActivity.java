@@ -3,6 +3,8 @@ package pt.ipg.gestortreinos;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     Treinos treino = new Treinos();
     private DBTableTreino dbTreino;
     ContentValues values = new ContentValues();
+    SQLiteOpenHelper dbTreinoOpenHelper;
+
+
 
     //ListView listView;
     //ArrayList<Button> arrayList = new ArrayList<Button>();
@@ -75,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
         tag_id++;
 
         treino.setTreinoId(tag_id);
+
+        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(getApplicationContext());
+        SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
+        DBTableTreino dbTableTreino = new DBTableTreino(db);
+
         dbTreino.insert(DBTableTreino.getContentValues(treino));
 
         b1.setOnClickListener(new OnClickListener(){
@@ -92,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         //arrayList.add(b1);//Adicionar cada butão criado ao arrayList
         //adapter.notifyDataSetChanged();
         //listView.setAdapter(adapter);//to associate an adapter with the list
+        //db.close();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
