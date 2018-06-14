@@ -1,7 +1,6 @@
 package pt.ipg.gestortreinos;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
@@ -12,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.InstrumentationRegistry.getContext;
 import static org.junit.Assert.*;
 
 /**
@@ -50,7 +48,7 @@ public class TreinoDBTest {
 
         Treinos treinos = new Treinos();
 
-        treinos.setId(1);
+        treinos.setTreinoId(1);
         treinos.setExercicio("Elevações");
         treinos.setPesoUsado(20);
         treinos.setSeries(3);
@@ -108,7 +106,7 @@ public class TreinoDBTest {
 
         Treinos treinos = DBTableTreino.getCurrentTreinoFromCursor(cursor);
 
-        assertEquals("ID incorreto do treino ", expectedTreinoId, treinos.getId());
+        assertEquals("ID incorreto do treino ", expectedTreinoId, treinos.getTreinoId());
         assertEquals("Nome incorreto do exercício", expectedExercicio, treinos.getExercicio());
         assertEquals("Número incorreto de peso usado", expectedPeso, treinos.getPesoUsado());
         assertEquals("Número incorreto de séries", expectedSeries, treinos.getSeries());

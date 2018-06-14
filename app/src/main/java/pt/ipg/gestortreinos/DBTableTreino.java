@@ -25,22 +25,22 @@ public class DBTableTreino implements BaseColumns {
     public void create() {
         db.execSQL(
                 "CREATE TABLE " + DATABASENAME_T + " (" +
-                        _ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +//MERDA!!!!!!!!!1
                         REPETICOES + " INTEGER NOT NULL," +
                         EXERCICIO + " TEXT NOT NULL," +
                         PESO_USADO + " INTEGER NOT NULL," +
                         SERIES + " INTEGER NOT NULL," +
                         TOTAL_REPS + " INTEGER NOT NULL," +
-                        "FOREIGN KEY (" + ID_DIA + ") REFERENCES " +
+                        "FOREIGN KEY ( " + ID_DIA + " ) REFERENCES " +
                         DBTableDiasSemana.DATABASENAME_D+
-                        "("+DBTableDiasSemana._ID+")"+
-                        ")"
+                        " ( " + DBTableDiasSemana._ID + " ) " +
+                        " ) "
         );
     }
 
      public static ContentValues getContentValues(Treinos treino){
          ContentValues values = new ContentValues();
-         values.put(_ID,treino.getId());
+         values.put(_ID, treino.getTreinoId());
          values.put(EXERCICIO,treino.getExercicio());
          values.put(REPETICOES,treino.getRepeticoes());
          values.put(PESO_USADO,treino.getPesoUsado());
@@ -127,7 +127,7 @@ public class DBTableTreino implements BaseColumns {
 
         Treinos treinos = new Treinos();
 
-        treinos.setId(cursor.getInt(posId));
+        treinos.setTreinoId(cursor.getInt(posId));
         treinos.setExercicio(cursor.getString(posExercicio));
         treinos.setRepeticoes(cursor.getInt(posRepeticoes));
         treinos.setSeries(cursor.getInt(posSeries));

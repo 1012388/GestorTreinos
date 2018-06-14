@@ -4,20 +4,18 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TreinoActivity extends AppCompatActivity {
     public static final String DIA_INVALIDO = "Dia Inválido";
@@ -44,7 +42,7 @@ public class TreinoActivity extends AppCompatActivity {
 
     private static String[] REPETICOES_COLUMN = new String[] {"repetições"};
     private static String[] SERIES_COLUMN = new String[] {"séries"};
-
+    private static String[] ID_COLUMN = new String[]{"_ID"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +68,13 @@ public class TreinoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int treinoID = intent.getIntExtra(MainActivity.VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO, 0);
 
-        treinoID = idTreino;
         int idTreino = 0;
         String exercicio = "";
         int repeticoes = 0;
         int series = 0;
         int pesoUsado = 0;
         int total_Reps = 0;
+
 
         TextView textViewDia = (TextView) findViewById(R.id.textViewDia);
         EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
@@ -86,7 +84,7 @@ public class TreinoActivity extends AppCompatActivity {
         TextView textView_Total = (TextView) findViewById(R.id.textView_Total);
 
         // TODO: 10/06/2018 VERIFICAR A ENTRADA NA BASE DE DADOS,PARA COMPARAR SE EXISTEM OS DADOS OU NÃO
-        textViewDia.setText("Treino:" + idTreino);
+        textViewDia.setText("Treino:" + treinoID);
 
 
         try {
@@ -94,11 +92,10 @@ public class TreinoActivity extends AppCompatActivity {
             if(pesoUsado <= 0){//se o idTreino for mal introduzido
                 editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
                 editTextPeso.requestFocus();
-                //return true;
             } else {
                 if (treinos.getPesoUsado() != 0){//se o peso dado pela BD for diferente de 0 ENTÃO É PORQUE É PARA ACTUALIZAR
                     values.put("Peso Usado", pesoUsado);
-                    dbTableTreino.update(values,DBTableTreino._ID+"=?",new String[] {String.valueOf(treinos.getId())});
+                    dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
                 }
             }
         } catch (NumberFormatException e) {
@@ -109,14 +106,14 @@ public class TreinoActivity extends AppCompatActivity {
 
         try {
             repeticoes = Integer.parseInt(editTextRep.getText().toString());
-            if(repeticoes <= 0){//se o idTreino for mal introduzido
+            if (repeticoes <= 0) {
                 editTextRep.setError(NUMERO_DE_REPETICOES_INVALIDO);
                 editTextRep.requestFocus();
                 //return true;
             }else{//se for bem introduzido
                 if(treinos.getRepeticoes() != 0){//se na base de dados já estiver um valor
                     values.put("Repetições",repeticoes);
-                    dbTableTreino.update(values,DBTableTreino._ID+"=?",new String[] {String.valueOf(treinos.getId())});
+                    dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
                 }
             }
 
@@ -135,7 +132,7 @@ public class TreinoActivity extends AppCompatActivity {
             }else {
                 if (treinos.getSeries() != 0) {
                     values.put("Séries", series);
-                    dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getId())});
+                    dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
                 }
             }
         } catch (NumberFormatException e) {
@@ -159,7 +156,7 @@ public class TreinoActivity extends AppCompatActivity {
         }else{//se for bem introduzido
             if(treinos.getRepeticoes() != 0){//se na base de dados já estiver um valor
                 values.put("Repetições",repeticoes);
-                dbTableTreino.update(values,DBTableTreino._ID+"=?",new String[] {String.valueOf(treinos.getId())});
+                dbTableTreino.update(values,DBTableTreino._ID+"=?",new String[] {String.valueOf(treinos.getTreinoId())});
             }
         }
 
@@ -170,7 +167,7 @@ public class TreinoActivity extends AppCompatActivity {
         }else {
             if (treinos.getSeries() != 0) {
                 values.put("Séries", series);
-                dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getId())});
+                dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
             }
         }
 
@@ -181,7 +178,7 @@ public class TreinoActivity extends AppCompatActivity {
         } else {
             if (treinos.getPesoUsado() != 0){//se o peso dado pela BD for diferente de 0 ENTÃO É PORQUE É PARA ACTUALIZAR
                 values.put("Peso Usado", pesoUsado);
-                dbTableTreino.update(values,DBTableTreino._ID+"=?",new String[] {String.valueOf(treinos.getId())});
+                dbTableTreino.update(values,DBTableTreino._ID+"=?",new String[] {String.valueOf(treinos.getTreinoId())});
             }
         }
 
@@ -192,7 +189,7 @@ public class TreinoActivity extends AppCompatActivity {
         }else {
             if(treinos.getRepeticoes() !=0){
                 values.put("Total de Repetições",total_Reps);
-                dbTableTreino.update(values,DBTableTreino._ID+"=?",new String[] {String.valueOf(treinos.getId())});
+                dbTableTreino.update(values,DBTableTreino._ID+"=?",new String[] {String.valueOf(treinos.getTreinoId())});
             }
         }
 
@@ -275,7 +272,7 @@ public class TreinoActivity extends AppCompatActivity {
         for (int i = 0; i < 4 ; i++) {
             tag = i;
             EditText1 = new EditText(TreinoActivity.this);
-            EditText1.setId(i);
+            EditText1.setTreinoId(i);
             EditText1.setText(field_names[i]);
             EditText1.setTag(tag);
             linearLayoutTreino.addView(EditText1);
@@ -286,7 +283,7 @@ public class TreinoActivity extends AppCompatActivity {
             }
         }
         //editTextExercicio
-        if(EditText1.getId()== 0) {
+        if(EditText1.getTreinoId()== 0) {
             EditText1.setInputType(InputType.TYPE_CLASS_TEXT);
         } else{//editTextPeso,Reps e Series que são todos numeros
             EditText1.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -303,10 +300,28 @@ public class TreinoActivity extends AppCompatActivity {
          */
    }
 
-    private void  renamePractice(){
-        //alterar o nome do botão
+    private int verificarLinhasTreinoBD(Treinos treinos) {
+        int linha = -1;
+
+        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(getApplicationContext());//
+
+        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
+
+        DBTableTreino dbTableTreino = new DBTableTreino(db);
+
+        Cursor cursor = dbTableTreino.query(ID_COLUMN, null,
+                null, null
+                , null, null
+        );
+
+        if (cursor.getCount() > linha) {
+            return linha = cursor.getCount();//foi introduzido x linhas na tabela Treino
+        } else {
+            return linha = -1;//Então não foi nenhuma linha introduzida na tabela Treino
+        }
+
     }
 
-
+    //TODO: Fazer uma função semelhante mas para verificar se foram introduzidos valores na tabela Dias
 
 }

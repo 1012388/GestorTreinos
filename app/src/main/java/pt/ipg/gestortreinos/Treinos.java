@@ -46,11 +46,11 @@ public class Treinos {
         return this.pesoUsado = pesoUsado;
     }
 
-    public int getId() {
+    public int getTreinoId() {
         return idTreino;
     }
 
-    public int setId(int idTreino) {
+    public int setTreinoId(int idTreino) {
         return this.idTreino = idTreino;
     }
 

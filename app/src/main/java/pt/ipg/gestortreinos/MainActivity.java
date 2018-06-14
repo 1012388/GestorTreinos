@@ -1,11 +1,12 @@
 
 package pt.ipg.gestortreinos;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -13,17 +14,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
-import android.widget.ScrollView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private  Button b1;
     int tag_id = 0;
     Treinos treino = new Treinos();
+    private DBTableTreino dbTreino;
+    ContentValues values = new ContentValues();
+
     //ListView listView;
     //ArrayList<Button> arrayList = new ArrayList<Button>();
 
@@ -51,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                seClicado(view);
+                //seClicado(view);
+                seClicado();
                 createNewPraticeButton();
             }
 
@@ -67,14 +66,16 @@ public class MainActivity extends AppCompatActivity {
 
         b1 = new Button(MainActivity.this);
         tag_id = conta;
-        b1.setId(tag_id);
-        //TODO:tag_id tem de ser inserido na base de dados
+        //treino.setTreinoId(tag_id);
+        //tag_id = seClicado();
 
+        b1.setId(tag_id);
         b1.setText("Treino" + tag_id);
         b1.setTag(tag_id);
         tag_id++;
 
-        treino.setId(tag_id);
+        treino.setTreinoId(tag_id);
+        dbTreino.insert(DBTableTreino.getContentValues(treino));
 
         b1.setOnClickListener(new OnClickListener(){
             @Override
@@ -117,20 +118,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void seClicado(View v) {
+    public int /*void*/ seClicado(/*View v*/) {
         conta++;
-        Snackbar.make(v, "Adicionar treino:" + conta, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        //Snackbar.make(v, "Adicionar treino:" + treino.getTreinoId(), Snackbar.LENGTH_LONG)
+        // .setAction("Action", null).show();
+        Toast.makeText(getApplicationContext(), "Adicionar treino:" + treino.getTreinoId(), Toast.LENGTH_SHORT).show();
 
-
-        //return conta;
+        return conta;
     }
 
     private void showTreinos(){
     //Passar para o Treino Actitivity o valor de quantas vezes o botão foi clicado
         Intent intent = new Intent(this, TreinoActivity.class);
 
-        intent.putExtra(TREINO_ID, treino.getId());
+        intent.putExtra(TREINO_ID, treino.getTreinoId());
 
 
 
