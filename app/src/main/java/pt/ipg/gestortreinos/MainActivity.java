@@ -25,12 +25,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
 public class MainActivity extends AppCompatActivity {
     public static final String VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO = "Vezes que clicado em adicionar treino";
+    public static final String TREINO_ID = "Treino ID";
     public int conta = 0;
     private  Button b1;
     int tag_id = 0;
-
+    Treinos treino = new Treinos();
     //ListView listView;
     //ArrayList<Button> arrayList = new ArrayList<Button>();
 
@@ -57,17 +59,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos
+
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         //ScrollView scrollView = (ScrollView) findViewById(R.id.scroolView);
 
         //ListView listView = (ListView) findViewById(R.id.listView);
-        //String[] buttonName = {"Treino"};
+
         b1 = new Button(MainActivity.this);
         tag_id = conta;
         b1.setId(tag_id);
+        //TODO:tag_id tem de ser inserido na base de dados
+
         b1.setText("Treino" + tag_id);
         b1.setTag(tag_id);
         tag_id++;
+
+        treino.setId(tag_id);
+
         b1.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -120,15 +128,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void showTreinos(){
     //Passar para o Treino Actitivity o valor de quantas vezes o botão foi clicado
-    /*
-        intent.putExtra(TREINO_ID,idTreino);
-        intent.putExtra(NOME_DO_EXERCICIO,exercicio);
-        intent.putExtra(NUMERO_DE_REPETICOES,repeticoes);
-        intent.putExtra(NUMERO_DE_SERIES,series);
-        intent.putExtra(NUMERO_DO_PESO_USADO,pesoUsado);
-    */
         Intent intent = new Intent(this, TreinoActivity.class);
-        intent.putExtra(VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO, conta);//contador serve para saber o número do id da tag para criar os botões por ordem crescente
+
+        intent.putExtra(TREINO_ID, treino.getId());
+
+
+
         startActivity(intent);
     }
 
