@@ -38,6 +38,8 @@ public class TreinoActivity extends AppCompatActivity {
     public int pesoUsado=0;
     public int total_Reps = 0;
     private DBTableTreino dbTableTreino;
+    private DBTreinoOpenHelper dbTreinoOpenHelper;
+
     ContentValues values = new ContentValues();
 
     private static String[] REPETICOES_COLUMN = new String[] {"repetições"};
@@ -140,8 +142,22 @@ public class TreinoActivity extends AppCompatActivity {
             editTextSerie.requestFocus();
             return;
         }
-        //TODO em textView_Total em vez de estar treinos.getTotal_Reps,ir a buscar o total à base de dados.
-    textView_Total.setText("Total de Repetições:"+treinos.getTotal_Reps(repeticoes,series));
+        //TODO em textView_Total em vez de estar treinos.getTotal_Reps,ir a buscar o total à tabela Treinos
+        ;
+
+        textView_Total.setText("Total de Repetições:" + getRepeticoesFromTable());
+        //textView_Total.setText("Total de Repetições:",dbTableTreino.query())
+    }
+
+
+    private int getRepeticoesFromTable() {
+        int repeticoesFromTable = 0;
+        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
+        String query_reps = "SELECT " + dbTableTreino.REPETICOES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
+        db.rawQuery(query_reps, new String[]{String.valueOf(repeticoesFromTable)});
+        db.close();
+
+        return repeticoesFromTable;
     }
 
     /*private boolean actualizarExercicio(int repeticoes, int series, int pesoUsado,int total_Reps
