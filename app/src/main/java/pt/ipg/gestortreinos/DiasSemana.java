@@ -6,8 +6,19 @@ import java.util.Date;
 public class DiasSemana {
 
     private int idDia;
-    private String nome_dia;
     private int current_day = 0;
+
+    private String nome_dia;
+    private String nameDay;
+
+    private int sabado = Calendar.SUNDAY;//1
+    private int segunda = Calendar.MONDAY;//2
+    private int terca = Calendar.TUESDAY;//3
+    private int quarta = Calendar.WEDNESDAY;//4
+    private int quinta = Calendar.THURSDAY;//5
+    private int sexta = Calendar.FRIDAY;//6
+    private int domingo = Calendar.SATURDAY;//7
+    private Date current_date = null;
 
 
     public int getIdDia() {
@@ -20,6 +31,7 @@ public class DiasSemana {
     }
 
     public String getNome_dia() {
+        nome_dia = getAndroidSystemNameDay();
         return nome_dia;
     }
 
@@ -29,16 +41,6 @@ public class DiasSemana {
 
 
     public int getAndroidSystemDay() {
-        Date current_date = null;
-
-        int sabado = Calendar.SUNDAY;//1
-        int segunda = Calendar.MONDAY;//2
-        int terca = Calendar.TUESDAY;//3
-        int quarta = Calendar.WEDNESDAY;//4
-        int quinta = Calendar.THURSDAY;//5
-        int sexta = Calendar.FRIDAY;//6
-        int domingo = Calendar.SATURDAY;//7
-
         switch (current_date.getDay()) {
             case 1:
                 current_day = sabado;
@@ -65,4 +67,35 @@ public class DiasSemana {
 
         return current_day;
     }
+
+    public String getAndroidSystemNameDay() {
+
+
+        switch (current_date.getDay()) {
+            case 1:
+                nameDay = "Sábado";
+                break;
+            case 2:
+                nameDay = "Segunda";
+                break;
+            case 3:
+                nameDay = "Terça";
+                break;
+            case 4:
+                nameDay = "Quarta";
+                break;
+            case 5:
+                nameDay = "Quinta";
+                break;
+            case 6:
+                nameDay = "Sexta";
+                break;
+            case 7:
+                nameDay = "Domingo";
+                break;
+        }
+
+        return nameDay;
+    }
+
 }
