@@ -31,13 +31,18 @@ public class DiasSemana {
     public int getAndroidSystemDay() {
         Date current_date = null;
 
-        int segunda = Calendar.MONDAY;
-        int terca = Calendar.TUESDAY;
-        int quarta = Calendar.WEDNESDAY;
-        int quinta = Calendar.THURSDAY;
-        int sexta = Calendar.FRIDAY;
+        int sabado = Calendar.SUNDAY;//1
+        int segunda = Calendar.MONDAY;//2
+        int terca = Calendar.TUESDAY;//3
+        int quarta = Calendar.WEDNESDAY;//4
+        int quinta = Calendar.THURSDAY;//5
+        int sexta = Calendar.FRIDAY;//6
+        int domingo = Calendar.SATURDAY;//7
 
         switch (current_date.getDay()) {
+            case 1:
+                current_day = sabado;
+                break;
             case 2:
                 current_day = segunda;
                 break;
@@ -52,6 +57,9 @@ public class DiasSemana {
                 break;
             case 6:
                 current_day = sexta;
+                break;
+            case 7:
+                current_day = domingo;
                 break;
         }
 
