@@ -31,13 +31,15 @@ public class Treinos {
     private int series;
     private int pesoUsado;
     private int total_Reps = 0;
+    private int idDia;
 
     public void setIdDia(int idDia) {
         this.idDia = idDia;
     }
 
-    private int idDia;
-
+    public int getIdDia() {
+        return idDia;
+    }
     public int getPesoUsado() {
         return pesoUsado;
     }

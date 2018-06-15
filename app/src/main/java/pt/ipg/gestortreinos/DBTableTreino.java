@@ -25,16 +25,15 @@ public class DBTableTreino implements BaseColumns {
     public void create() {
         db.execSQL(
                 "CREATE TABLE " + DATABASENAME_T + " (" +
-                        _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +//MERDA!!!!!!!!!1
+                        _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         REPETICOES + " INTEGER NOT NULL," +
                         EXERCICIO + " TEXT NOT NULL," +
                         PESO_USADO + " INTEGER NOT NULL," +
                         SERIES + " INTEGER NOT NULL," +
                         TOTAL_REPS + " INTEGER NOT NULL," +
-                        "FOREIGN KEY ( " + ID_DIA + " ) REFERENCES " +
+                        " FOREIGN KEY ( " + ID_DIA + " ) REFERENCES " +
                         DBTableDiasSemana.DATABASENAME_D+
-                        " ( " + DBTableDiasSemana._ID + " ) " +
-                        " ) "
+                        " (" + DBTableDiasSemana._ID + ") " + " )"
         );
     }
 
@@ -46,8 +45,28 @@ public class DBTableTreino implements BaseColumns {
          values.put(PESO_USADO,treino.getPesoUsado());
          values.put(SERIES,treino.getSeries());
          values.put(TOTAL_REPS,treino.getRepeticoes());
+         values.put(ID_DIA, treino.getIdDia());
         return values;
      }
+
+    public static Treinos getCurrentTreinoFromCursor(Cursor cursor) {
+        final int posId = cursor.getColumnIndex(_ID);
+        final int posExercicio = cursor.getColumnIndex(EXERCICIO);
+        final int posRepeticoes = cursor.getColumnIndex(REPETICOES);
+        final int posSeries = cursor.getColumnIndex(SERIES);
+        final int posId_Dia = cursor.getColumnIndex(ID_DIA);
+
+        Treinos treinos = new Treinos();
+
+        treinos.setTreinoId(cursor.getInt(posId));
+        treinos.setExercicio(cursor.getString(posExercicio));
+        treinos.setRepeticoes(cursor.getInt(posRepeticoes));
+        treinos.setSeries(cursor.getInt(posSeries));
+        treinos.getTotal_Reps(cursor.getInt(posRepeticoes), cursor.getInt(posSeries));
+        treinos.setIdDia(cursor.getInt(posId_Dia));
+
+        return treinos;
+    }
 
     public long insert(ContentValues values){ return db.insert(DATABASENAME_T,null,values);
 
@@ -119,20 +138,5 @@ public class DBTableTreino implements BaseColumns {
         return db.query(DATABASENAME_T, columns, selection, selectionArgs, groupBy, having, orderBy);
     }
 
-    public static Treinos getCurrentTreinoFromCursor(Cursor cursor) {
-        final int posId = cursor.getColumnIndex(_ID);
-        final int posExercicio = cursor.getColumnIndex(EXERCICIO);
-        final int posRepeticoes = cursor.getColumnIndex(REPETICOES);
-        final int posSeries = cursor.getColumnIndex(SERIES);
 
-        Treinos treinos = new Treinos();
-
-        treinos.setTreinoId(cursor.getInt(posId));
-        treinos.setExercicio(cursor.getString(posExercicio));
-        treinos.setRepeticoes(cursor.getInt(posRepeticoes));
-        treinos.setSeries(cursor.getInt(posSeries));
-        treinos.getTotal_Reps(cursor.getInt(posRepeticoes),cursor.getInt(posSeries));
-
-        return treinos;
-    }
 }
