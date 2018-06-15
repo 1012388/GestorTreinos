@@ -137,9 +137,8 @@ public class TreinoDBTest {
       DiasSemana dia = DBTableDiasSemana.getCurrentTreinoFromCursor(cursor);
 
       assertEquals("ID incorreto do dia ", expectedID,dia.getIdDia());
-      assertEquals("Nome incorreto do dia",expectedNomeDia, dia.getNome_dia());
-      assertEquals("Nome incorreto do grupo muscular", expectedGrupoMuscular, dia.getGrupo_Muscular());
-
+        assertEquals("Nome incorreto do dia", expectedNomeDia, dia.getNomeMes());
+      
       return dia;
     }
     private Context getContext() {

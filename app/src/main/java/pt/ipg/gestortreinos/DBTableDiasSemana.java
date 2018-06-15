@@ -5,13 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import java.security.acl.NotOwnerException;
-
 public class DBTableDiasSemana implements BaseColumns {
 
-    public static final String NOME_DIA = "nome_dia";
+    public static final String NOME_MES = "nome_mes";
     public static final String DATABASENAME_D = "diasSemana";
-    public static final String[] ALL_COLUMNS = new String[]{_ID, NOME_DIA};
+    public static final String[] ALL_COLUMNS = new String[]{_ID, NOME_MES};
 
     private SQLiteDatabase db;
 
@@ -23,7 +21,7 @@ public class DBTableDiasSemana implements BaseColumns {
         db.execSQL(
                 "CREATE TABLE " + DATABASENAME_D + " (" +
                         _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        NOME_DIA + " TEXT NOT NULL" +
+                        NOME_MES + " TEXT NOT NULL" +
                         ")"
                 );
 
@@ -33,7 +31,7 @@ public class DBTableDiasSemana implements BaseColumns {
         ContentValues values = new ContentValues();
 
         values.put(_ID,DiasSemana.getIdDia());
-        values.put(NOME_DIA,DiasSemana.getNome_dia());
+        values.put(NOME_MES, DiasSemana.getNomeMes());
 
         return values;
     }
@@ -57,13 +55,13 @@ public class DBTableDiasSemana implements BaseColumns {
 
     public static DiasSemana getCurrentTreinoFromCursor(Cursor cursor) {
         final int posId = cursor.getColumnIndex(_ID);
-        final int posNomeDia = cursor.getColumnIndex(NOME_DIA);
+        final int posNomeMes = cursor.getColumnIndex(NOME_MES);
 
 
         DiasSemana diasSemana = new DiasSemana();
 
         diasSemana.setIdDia(cursor.getInt(posId));
-        diasSemana.setNome_dia(cursor.getString(posNomeDia));
+        diasSemana.setNomeMes(cursor.getString(posNomeMes));
 
 
         return diasSemana;

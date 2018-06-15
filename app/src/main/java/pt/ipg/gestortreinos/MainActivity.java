@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -20,6 +19,7 @@ import android.widget.Button;
 
 import android.widget.LinearLayout;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ContentValues values = new ContentValues();
     SQLiteOpenHelper dbTreinoOpenHelper;
 
-
+    DiasSemana diasSemana = new DiasSemana();
 
     //ListView listView;
     //ArrayList<Button> arrayList = new ArrayList<Button>();
@@ -50,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         //listView.setAdapter(adapter);
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 //seClicado(view);
                 seClicado();
+
                 createNewPraticeButton();
             }
 
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        //TODO: TIRAR ESTA MERDA!! ESTÁ A DAR CONFLITO PORQUE CONTA FICA DIFERENTE
+
         if (id == R.id.action_Eliminar) {//Adicionar treino
             //deleteTreinoButton();
             //conta++;
