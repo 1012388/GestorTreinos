@@ -138,8 +138,8 @@ public class TreinoDBTest {
 
       assertEquals("ID incorreto do dia ", expectedID,dia.getIdDia());
         assertEquals("Nome incorreto do dia", expectedNomeDia, dia.getNomeMes());
-      
-      return dia;
+
+        return dia;
     }
     private Context getContext() {
         return InstrumentationRegistry.getTargetContext();

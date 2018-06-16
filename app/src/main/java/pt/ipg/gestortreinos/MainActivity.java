@@ -26,15 +26,16 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     public static final String VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO = "Vezes que clicado em adicionar treino";
     public static final String TREINO_ID = "Treino ID";
-    public int conta = 0;
+    public static final String DIA = "Dia";
+    public int conta = 1;
     private  Button b1;
-    int tag_id = 0;
+    int tag_id = 1;
     Treinos treino = new Treinos();
-    private DBTableTreino dbTreino;
-    ContentValues values = new ContentValues();
-    SQLiteOpenHelper dbTreinoOpenHelper;
-
     DiasSemana diasSemana = new DiasSemana();
+
+    ContentValues values = new ContentValues();
+
+
 
     //ListView listView;
     //ArrayList<Button> arrayList = new ArrayList<Button>();
@@ -49,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //listView.setAdapter(adapter);
+        TextView textView = (TextView) findViewById(R.id.textView);
+        //textView.setText("Dia: "+diasSemana.getAndroidSystemDay()+"\n Mês:"+diasSemana.getAndroidSystemMonth());
+        textView.setText(" " + diasSemana.getIdDia() + "/" + diasSemana.getNomeMes() + "/" + diasSemana.getAndroidSystemYear());
+
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -67,9 +73,12 @@ public class MainActivity extends AppCompatActivity {
     private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        //ScrollView scrollView = (ScrollView) findViewById(R.id.scroolView);
+        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(getApplicationContext());
+        SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
 
-        //ListView listView = (ListView) findViewById(R.id.listView);
+        DBTableTreino dbTableTreino = new DBTableTreino(db);
+        DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);
+
 
         b1 = new Button(MainActivity.this);
         tag_id = conta;
@@ -81,13 +90,19 @@ public class MainActivity extends AppCompatActivity {
         b1.setTag(tag_id);
         tag_id++;
 
+        diasSemana.setIdDia(diasSemana.getIdDia());
         treino.setTreinoId(tag_id);
 
-        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(getApplicationContext());
-        SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
-        DBTableTreino dbTableTreino = new DBTableTreino(db);
+        //Inserção para a base de dados
+        dbTableDiasSemana.insert(DBTableDiasSemana.getContentValues(diasSemana));
+        dbTableTreino.insert(DBTableTreino.getContentValues(treino));
 
-        dbTreino.insert(DBTableTreino.getContentValues(treino));
+
+
+
+
+
+
 
         b1.setOnClickListener(new OnClickListener(){
             @Override
@@ -145,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TreinoActivity.class);
 
         intent.putExtra(TREINO_ID, treino.getTreinoId());
-
+        intent.putExtra(DIA, diasSemana.getIdDia());
 
 
         startActivity(intent);

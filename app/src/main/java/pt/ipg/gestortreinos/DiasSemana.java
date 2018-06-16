@@ -23,7 +23,7 @@ public class DiasSemana {
     }
 
     public String getNomeMes() {
-        NomeMes = getAndroidSystemNameMonth();
+        NomeMes = getAndroidSystemMonth();
         return NomeMes;
     }
 
@@ -41,13 +41,21 @@ public class DiasSemana {
         return dia;
     }
 
-    public String getAndroidSystemNameMonth() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM");// Dia e Mês
+    public String getAndroidSystemMonth() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM");// Mês
         current_Date = sdf.format(instanceDate.getTime());
 
 
         String mes = current_Date;
         return mes;
+    }
+
+    public String getAndroidSystemYear() {
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY");// Ano
+        current_Date = sdf.format(instanceDate.getTime());
+
+        String ano = current_Date;
+        return ano;
     }
 
 }
