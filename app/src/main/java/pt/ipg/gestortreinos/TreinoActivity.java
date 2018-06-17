@@ -115,7 +115,7 @@ public class TreinoActivity extends AppCompatActivity {
             } else {
                 treinos.setExercicio(exercicio);
                 dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
-                if (getExercicioFromTable() != 0) {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
+                if (getExercicioFromTable() != "") {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
                     dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
                 }
             }
@@ -180,15 +180,11 @@ public class TreinoActivity extends AppCompatActivity {
             editTextSerie.requestFocus();
             return;
         }
-        //TODO em textView_Total em vez de estar treinos.getTotal_Reps,ir a buscar o total à tabela Treinos
-
-
-        //textView_Total.setText("Total de Repetições:" + getRepeticoesFromTable() * getSeriesFromTable());
-        //textView_Total.setText("Total de Repetições:",dbTableTreino.query())
+        textView_Total.setText("Total de Repetições:" + getRepeticoesFromTable() * getSeriesFromTable());
     }
 
-    private int getExercicioFromTable() {
-        int ExercicioFromTable = 0;
+    private String getExercicioFromTable() {
+        String ExercicioFromTable = "";
 
         SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
         String query_reps = "SELECT " + DBTableTreino.EXERCICIO + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";

@@ -31,7 +31,7 @@ public class DBTableTreino implements BaseColumns {
                         PESO_USADO + " INTEGER NOT NULL," +
                         SERIES + " INTEGER NOT NULL," +
                         TOTAL_REPS + " INTEGER NOT NULL," +
-                        " FOREIGN KEY ( " + ID_DIA + " ) REFERENCES " +//TODO :ERRO  NAO RECONHECE A FOREIGN KEY!!
+                        " FOREIGN KEY ( " + ID_DIA + " ) REFERENCES " +
                         DBTableDiasSemana.DATABASENAME_D+
                         " (" + DBTableDiasSemana._ID + ") " + " )"
         );
