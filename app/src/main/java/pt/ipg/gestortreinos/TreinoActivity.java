@@ -112,6 +112,12 @@ public class TreinoActivity extends AppCompatActivity {
             if (exercicio == "") {
                 editTextExercicio.setError(TEM_DE_COLOCAR_UM_EXERCÍCIO);
                 editTextExercicio.requestFocus();
+            } else {
+                treinos.setExercicio(exercicio);
+                dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
+                if (getExercicioFromTable() != 0) {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
+                    dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
+                }
             }
         } catch (NumberFormatException e) {
             editTextExercicio.setError(TEM_DE_COLOCAR_UM_EXERCÍCIO);
@@ -142,16 +148,12 @@ public class TreinoActivity extends AppCompatActivity {
             if (repeticoes <= 0) {
                 editTextRep.setError(NUMERO_DE_REPETICOES_INVALIDO);
                 editTextRep.requestFocus();
-                //return true;
             } else {//se for bem introduzido
                 treinos.setRepeticoes(repeticoes);
                 dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
-                /*if (treinos.getRepeticoes() > 0) {
-                    dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
-                }else if(treinos.getRepeticoes() != 0){//se na base de dados já estiver um valor
-                    //values.put("Repetições",repeticoes);
-                    //dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
-                }*/
+                if (getRepeticoesFromTable() != 0) {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
+                    dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
+                }
             }
 
         } catch (NumberFormatException e) {
@@ -165,19 +167,14 @@ public class TreinoActivity extends AppCompatActivity {
             if(series <= 0){//se o idTreino for mal introduzido
                 editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
                 editTextSerie.requestFocus();
-                //return true;
+
             }else {
                 treinos.setSeries(series);
                 dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
+                if (getSeriesFromTable() != 0) {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
+                    dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
+                }
             }
-                /*if (treinos.getSeries() > 0) {
-                    dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
-                }
-            }else if (treinos.getSeries() != 0) {
-                    values.put("Séries", series);
-                    //dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
-                }
-            }*/
         } catch (NumberFormatException e) {
             editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
             editTextSerie.requestFocus();
