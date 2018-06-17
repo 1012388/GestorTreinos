@@ -100,7 +100,6 @@ public class TreinoActivity extends AppCompatActivity {
         EditText editTextPeso = (EditText) findViewById(R.id.editTextPeso);
         TextView textView_Total = (TextView) findViewById(R.id.textView_Total);
 
-        // TODO: 10/06/2018 VERIFICAR A ENTRADA NA BASE DE DADOS,PARA COMPARAR SE EXISTEM OS DADOS OU NÃO
         textViewDia.setText("Treino:" + treinoID + " " + diasSemana.getIdDia() + "/" + diasSemana.getNomeMes() + "/" + diasSemana.getAndroidSystemYear());
 
         treinos.setRepeticoes(pesoUsado);
@@ -127,16 +126,14 @@ public class TreinoActivity extends AppCompatActivity {
                 editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
                 editTextPeso.requestFocus();
             } else {
-                Toast.makeText(getApplicationContext(), "linhas na BD: " + verificaNLinhasTreinoBD(treinos), Toast.LENGTH_SHORT).show();
+                treinos.setPesoUsado(pesoUsado);
+                dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
+
+
                 /*if(verificaNLinhasTreinoBD(treinos) > 0 ){//Se não houver dados na BD
-                    treinos.setRepeticoes(pesoUsado);
                     Toast.makeText(getApplicationContext(), "linhas na BD: " + verificaNLinhasTreinoBD(treinos), Toast.LENGTH_SHORT).show();
                     //dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
                     Toast.makeText(getApplicationContext(), "Peso a entrar na bd" + pesoUsado, Toast.LENGTH_LONG).show();
-                }*/
-                /*else if (treinos.getPesoUsado() != 0){//se o peso dado pela BD for diferente de 0 ENTÃO É PORQUE É PARA ACTUALIZAR
-                    values.put("Peso Usado", pesoUsado);
-                   // dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
                 }*/
             }
         } catch (NumberFormatException e) {
@@ -152,9 +149,11 @@ public class TreinoActivity extends AppCompatActivity {
                 editTextRep.requestFocus();
                 //return true;
             } else {//se for bem introduzido
-                if (treinos.getRepeticoes() > 0) {
+                treinos.setRepeticoes(repeticoes);
+                dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
+                /*if (treinos.getRepeticoes() > 0) {
                     dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
-                }/*else if(treinos.getRepeticoes() != 0){//se na base de dados já estiver um valor
+                }else if(treinos.getRepeticoes() != 0){//se na base de dados já estiver um valor
                     //values.put("Repetições",repeticoes);
                     //dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
                 }*/
@@ -173,10 +172,13 @@ public class TreinoActivity extends AppCompatActivity {
                 editTextSerie.requestFocus();
                 //return true;
             }else {
-                if (treinos.getSeries() > 0) {
+                treinos.setSeries(series);
+                dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
+            }
+                /*if (treinos.getSeries() > 0) {
                     dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
                 }
-            }/*else if (treinos.getSeries() != 0) {
+            }else if (treinos.getSeries() != 0) {
                     values.put("Séries", series);
                     //dbTableTreino.update(values, DBTableTreino._ID + "=?", new String[]{String.valueOf(treinos.getTreinoId())});
                 }
@@ -193,6 +195,29 @@ public class TreinoActivity extends AppCompatActivity {
         //textView_Total.setText("Total de Repetições:",dbTableTreino.query())
     }
 
+    private int getExercicioFromTable() {
+        int ExercicioFromTable = 0;
+
+        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
+        String query_reps = "SELECT " + DBTableTreino.EXERCICIO + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
+        db.rawQuery(query_reps, new String[]{String.valueOf(ExercicioFromTable)});
+        db.close();
+
+        return ExercicioFromTable;
+    }
+
+ 
+    private int getRepeticoesFromTable() {
+        int repeticoesFromTable = 0;
+
+        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
+        String query_reps = "SELECT " + DBTableTreino.REPETICOES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
+        db.rawQuery(query_reps, new String[]{String.valueOf(repeticoesFromTable)});
+        db.close();
+
+        return repeticoesFromTable;
+    }
+
     private int getSeriesFromTable() {
         int seriesFromTable = 0;
 
@@ -204,16 +229,10 @@ public class TreinoActivity extends AppCompatActivity {
         return seriesFromTable;
     }
 
-    private int getRepeticoesFromTable() {
-        int repeticoesFromTable = 0;
 
-        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-        String query_reps = "SELECT " + DBTableTreino.REPETICOES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
-        db.rawQuery(query_reps, new String[]{String.valueOf(repeticoesFromTable)});
-        db.close();
 
-        return repeticoesFromTable;
-    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -239,13 +258,13 @@ public class TreinoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   /* private void adicionarExercicio() {
+    /*private void adicionarExercicio() {
         String[]field_names = {"Exercicio","Peso","Repetições","Séries","TotalRepetições"};
         LinearLayout linearLayoutTreino = (LinearLayout) findViewById(R.id.linearLayoutTreino);
         //CoordinatorLayout layoutTreinoParent = (CoordinatorLayout) findViewById(R.id.layoutTreinoParent);
         int tag = 0;
         int total = treinos.getTotal_Reps(treinos.setRepeticoes(3),treinos.setSeries(3));//
-        for (int i = 0; i < 4 ; i++) {
+        for (int i = 0; i <= 4 ; i++) {
             tag = i;
             EditText1 = new EditText(TreinoActivity.this);
             EditText1.setTreinoId(i);
@@ -276,26 +295,19 @@ public class TreinoActivity extends AppCompatActivity {
          */
    }
 
-    private int verificaNLinhasTreinoBD(Treinos treinos) {
+    /*private int verificaNLinhasTreinoBD(Treinos treinos) {
         int linha = -1;
 
-        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(getApplicationContext());//
-
-        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-
-        DBTableTreino dbTableTreino = new DBTableTreino(db);
-
-        Cursor cursor = dbTableTreino.query(TREINO_ID_COLUMN, null,
-                null, null
-                , null, null
-        );
-
-        if (cursor.getCount() > linha) {
+        if (Integer.parseInt(query) > linha) {
             return linha = cursor.getCount();//foi introduzido x linhas na tabela Treino
         } else {
             return linha = -1;//Então não foi nenhuma linha introduzida na tabela Treino
         }
-    }
+
+
+
+
+    }*/
 
 
     private int verificarNLinhasDiaBD(DiasSemana diasSemana) {
