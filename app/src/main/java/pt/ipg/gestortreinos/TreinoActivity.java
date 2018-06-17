@@ -206,7 +206,17 @@ public class TreinoActivity extends AppCompatActivity {
         return ExercicioFromTable;
     }
 
- 
+    private int getPesoFromTable() {
+        int PesoFromTable = 0;
+
+        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
+        String query_reps = "SELECT " + DBTableTreino.PESO_USADO + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
+        db.rawQuery(query_reps, new String[]{String.valueOf(PesoFromTable)});
+        db.close();
+
+        return PesoFromTable;
+    }
+    
     private int getRepeticoesFromTable() {
         int repeticoesFromTable = 0;
 
