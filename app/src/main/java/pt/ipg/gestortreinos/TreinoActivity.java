@@ -121,20 +121,15 @@ public class TreinoActivity extends AppCompatActivity {
 
         try {
             pesoUsado = Integer.parseInt(editTextPeso.getText().toString());
-
             if(pesoUsado <= 0){//se o idTreino for mal introduzido
                 editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
                 editTextPeso.requestFocus();
             } else {
-                treinos.setPesoUsado(pesoUsado);
+                treinos.setPesoUsado(pesoUsado);//Introduzir sempre o pesoUsado
                 dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
-
-
-                /*if(verificaNLinhasTreinoBD(treinos) > 0 ){//Se não houver dados na BD
-                    Toast.makeText(getApplicationContext(), "linhas na BD: " + verificaNLinhasTreinoBD(treinos), Toast.LENGTH_SHORT).show();
-                    //dbTableTreino.insert(DBTableTreino.getContentValues(treinos));
-                    Toast.makeText(getApplicationContext(), "Peso a entrar na bd" + pesoUsado, Toast.LENGTH_LONG).show();
-                }*/
+                if (getPesoFromTable() != 0) {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
+                    dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
+                }
             }
         } catch (NumberFormatException e) {
             editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
@@ -216,7 +211,7 @@ public class TreinoActivity extends AppCompatActivity {
 
         return PesoFromTable;
     }
-    
+
     private int getRepeticoesFromTable() {
         int repeticoesFromTable = 0;
 
