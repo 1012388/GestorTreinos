@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO = "Vezes que clicado em adicionar treino";
     public static final String TREINO_ID = "Treino ID";
     public static final String DIA = "Dia";
-    public int conta = 1;
+    public int conta = 0;
     private  Button b1;
-    int tag_id = 1;
+    int tag_id = 0;
     Treinos treino = new Treinos();
     DiasSemana diasSemana = new DiasSemana();
 
@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showTreinos();//Abrir Treino Activity
-
             }
         });
 
