@@ -20,7 +20,7 @@ public class DBTableDiasSemana implements BaseColumns {
     public void create(){
         db.execSQL(
                 "CREATE TABLE " + DATABASENAME_D + " (" +
-                        _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        _ID + " INTEGER PRIMARY KEY , " +
                         NOME_MES + " TEXT NOT NULL" +
                         ")"
                 );

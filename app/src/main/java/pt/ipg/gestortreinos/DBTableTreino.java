@@ -26,7 +26,7 @@ public class DBTableTreino implements BaseColumns {
     public void create() {
         db.execSQL(
                 "CREATE TABLE " + DATABASENAME_T + " (" +
-                        _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        _ID + " INTEGER PRIMARY KEY , " +
                         REPETICOES + " INTEGER NOT NULL," +
                         EXERCICIO + " TEXT NOT NULL," +
                         PESO_USADO + " INTEGER NOT NULL," +

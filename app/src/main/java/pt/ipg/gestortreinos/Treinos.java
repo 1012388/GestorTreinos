@@ -1,7 +1,5 @@
 package pt.ipg.gestortreinos;
 
-import android.content.ContentValues;
-
 public class Treinos {
     /*  Treino
 
@@ -40,6 +38,7 @@ public class Treinos {
     public int getIdDia() {
         return idDia;
     }
+
     public int getPesoUsado() {
         return pesoUsado;
     }
@@ -61,7 +60,7 @@ public class Treinos {
     }
 
     public String setExercicio(String exercicio) {
-       return this.exercicio = exercicio;
+        return this.exercicio = exercicio;
     }
 
     public int getRepeticoes() {
@@ -72,8 +71,7 @@ public class Treinos {
         return this.repeticoes = repeticoes;
     }
 
-    public int getSeries()
-    {
+    public int getSeries() {
         return series;
     }
 
@@ -81,8 +79,8 @@ public class Treinos {
         return this.series = series;
     }
 
-    public int getTotal_Reps(int repeticoes,int series){
-        return total_Reps = setRepeticoes(repeticoes)*setSeries(series); //Formula:int total=int Rep da série 1 + int Rep da série 2+...int Rep da série n
+    public int getTotal_Reps(int repeticoes, int series) {
+        return total_Reps = setRepeticoes(repeticoes) * setSeries(series); //Formula:int total=int Rep da série 1 + int Rep da série 2+...int Rep da série n
     }
 
 

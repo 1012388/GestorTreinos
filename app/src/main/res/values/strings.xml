@@ -10,4 +10,5 @@
     <string name="n_repeti_es">Nº Repetições</string>
     <string name="nome_exerc_cio">Nome Exercício</string>
     <string name="treino_1">Treino 1</string>
+    <string name="title_activity_edit_treino">EditTreinoActivity</string>
 </resources>

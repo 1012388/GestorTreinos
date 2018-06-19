@@ -49,10 +49,11 @@ public class TreinoActivity extends AppCompatActivity {
 
     ContentValues values = new ContentValues();
 
-    private static String[] REPETICOES_COLUMN = new String[] {"repetições"};
-    private static String[] SERIES_COLUMN = new String[] {"séries"};
+    private static String[] REPETICOES_COLUMN = new String[]{"Repeticoes"};
+    private static String[] SERIES_COLUMN = new String[]{"Series"};
     private static String[] TREINO_ID_COLUMN = new String[]{"_ID"};
     private static String[] DIA_ID_COLUMN = new String[]{"_ID"};
+    private boolean novosValores = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class TreinoActivity extends AppCompatActivity {
 
         DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(this);
         SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
+        SQLiteDatabase readableDatabase = dbTreinoOpenHelper.getReadableDatabase();
 
         DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);
         DBTableTreino dbTableTreino = new DBTableTreino(db);
@@ -196,32 +198,57 @@ public class TreinoActivity extends AppCompatActivity {
             editTextSerie.requestFocus();
             return;
         }
-        //TODO:ERRO NA ENTRADA PARA A BD
+        //textView_Total.setText("Total de Repetições:" + treino.getRepeticoes() * treino.getSeries());
+
+        // if(novosValores) {
         dbTableDiasSemana.insert(dbTableDiasSemana.getContentValues(diasSemanas));
         dbTableTreino.insert(dbTableTreino.getContentValues(treino));
 
 
-        textView_Total.setText(" " + dbTableDiasSemana.getContentValues(diasSemanas) + "\n" + dbTableTreino.getContentValues(treino));
+/*
+            editTextExercicio.setText("");
+            editTextRep.setText("");
+            editTextPeso.setText("");
+            editTextSerie.setText("");
+            textView_Total.setText("");
 
+            novosValores = !novosValores;*/
+        textView_Total.setText("" + dbTableTreino.getContentValues(treino));
+        //}
 
-        //textView_Total.setText("Total de Repetições:" + getRepeticoesFromTable() * getSeriesFromTable());
 
         db.close();
     }
+    //todo: As funções getFromTables estão erradas!! IR A VER COMO FIZ NA função createTreino para inserir na BD.
+
+
 
     private String getExercicioFromTable() {
         String ExercicioFromTable = "";
 
+        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(this);
+
         SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-        String query_reps = "SELECT " + DBTableTreino.EXERCICIO + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
+        String query_reps = "SELECT " + DBTableTreino.EXERCICIO + " FROM treino WHERE " + DBTableTreino._ID + " =?";
         db.rawQuery(query_reps, new String[]{String.valueOf(ExercicioFromTable)});
         db.close();
 
+        /*
+        SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
+
+        DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);
+        DBTableTreino dbTableTreino = new DBTableTreino(db);
+        Treinos treino = new Treinos();
+        DiasSemana diasSemanas = new DiasSemana();*/
+
         return ExercicioFromTable;
+
     }
 
     private int getPesoFromTable() {
         int PesoFromTable = 0;
+
+        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(this);
 
         SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
         String query_reps = "SELECT " + DBTableTreino.PESO_USADO + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
@@ -237,21 +264,19 @@ public class TreinoActivity extends AppCompatActivity {
         SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
         String query_reps = "SELECT " + DBTableTreino.REPETICOES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
         db.rawQuery(query_reps, new String[]{String.valueOf(repeticoesFromTable)});
+
         db.close();
 
         return repeticoesFromTable;
     }
 
-    private int getSeriesFromTable() {
-        int seriesFromTable = 0;
+    /*private int getSeriesFromTable() {
 
         SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-        String query_reps = "SELECT " + DBTableTreino.SERIES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
-        db.rawQuery(query_reps, new String[]{String.valueOf(seriesFromTable)});
         db.close();
 
         return seriesFromTable;
-    }
+    }*/
 
 
 

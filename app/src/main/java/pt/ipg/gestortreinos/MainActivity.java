@@ -62,9 +62,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //seClicado(view);
-                seClicado();
-
-                createNewPraticeButton();
+                if (diasSemana.getAndroidSystemDay() != diasSemana.getAndroidSystemDay() || seClicado() > 2) {//se for no mesmo dia e se clicar 2 vezes
+                    //finish();
+                    Toast.makeText(getApplicationContext(), "Erro!", Toast.LENGTH_SHORT).show();
+                    /*try {
+                      throw new Exception("Error!!");
+                      } catch (Exception e) {
+                      e.printStackTrace();
+                   }*/
+                } else {
+                    createNewPraticeButton();
+                }
             }
 
         });
@@ -91,34 +99,27 @@ public class MainActivity extends AppCompatActivity {
         tag_id++;
 
         diasSemana.setIdDia(diasSemana.getIdDia());
-        treino.setTreinoId(tag_id);
+        treino.setTreinoId(seClicado());
+        treino.setExercicio("");
 
         //Inserção para a base de dados
         dbTableDiasSemana.insert(DBTableDiasSemana.getContentValues(diasSemana));
         dbTableTreino.insert(DBTableTreino.getContentValues(treino));
 
-
-
-
-
-
-
-
         b1.setOnClickListener(new OnClickListener(){
+
             @Override
             public void onClick(View view) {
+
                 showTreinos();//Abrir Treino Activity
+
+
             }
         });
 
-        //scrollView.addView(b1);
-
         linearLayout.addView(b1);
 
-        //arrayList.add(b1);//Adicionar cada butão criado ao arrayList
-        //adapter.notifyDataSetChanged();
-        //listView.setAdapter(adapter);//to associate an adapter with the list
-        //db.close();
+        db.close();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         conta++;
         //Snackbar.make(v, "Adicionar treino:" + treino.getTreinoId(), Snackbar.LENGTH_LONG)
         // .setAction("Action", null).show();
-        Toast.makeText(getApplicationContext(), "Adicionar treino:" + treino.getTreinoId(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Adicionar treino:" + treino.getTreinoId(), Toast.LENGTH_SHORT).show();
 
         return conta;
     }
@@ -165,5 +166,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+//TODO:Criar mensagem de dialog. Quando cria um treino. Aparece uma janela a dizer se quer eliminar ou abrir.
+    //TODO:Implementar o Recycle View
 
 }
