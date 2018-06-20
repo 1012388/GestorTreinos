@@ -17,15 +17,21 @@ import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.nio.charset.MalformedInputException;
+
 public class EditExercicioActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<> {
-    //new TreinoCursorAdapter;
-    Treinos treino = new Treinos();
+
     private EditText editTextExercicio;
     private EditText editTextSerie;
     private EditText editTextPeso;
     private EditText editTextReps;
+
+    private Spinner spinner;
+    private Treinos treino;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +40,40 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Intent intent = getIntent();
 
-        getSupportLoaderManager().restartLoader(, null, )
+        int treinoId = intent.getIntExtra(MainActivity.TREINO_ID, -1);
+
+        if (treinoId == -1) {
+            Toast.makeText(getApplicationContext(), "Erro ao iniciar esta atividade", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        Cursor cursorTreino = getContentResolver().query(
+                Uri.withAppendedPath(TreinoContentProvider.TREINO_URI, Integer.toString(treinoId)),
+                DBTableTreino.ALL_COLUMNS
+                , null,
+                null
+                , null
+        );
+
+        if (!cursorTreino.moveToNext()) {
+            Toast.makeText(this, "Não foi encontrado nenhum Treino", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+
+        EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
+        EditText editTextPeso = (EditText) findViewById(R.id.editTextPeso);
+        EditText editTextRep = (EditText) findViewById(R.id.editTextRep);
+        EditText editTextSerie = (EditText) findViewById(R.id.editTextSerie);
+        Spinner spinnerDia = (Spinner) findViewById(R.id.spinnerDia);
+
+        treino = DBTableTreino.getCurrentTreinoFromCursor(cursorTreino);
+
+
     }
 
 
