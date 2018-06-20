@@ -37,22 +37,6 @@ public class DBTableDiasSemana implements BaseColumns {
     }
 
 
-    public long insert(ContentValues values){
-        return db.insert(DATABASENAME_D,null,values);
-    }
-
-    public int update(ContentValues values,String whereClause,String[] whereArgs){
-        return db.update(DATABASENAME_D,values, whereClause, whereArgs);
-    }
-
-    public int delete(String table,String whereClause,String[] whereArgs){
-        return db.delete(DATABASENAME_D,whereClause,whereArgs);
-    }
-
-    public Cursor query (String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
-        return db.query(DATABASENAME_D, columns, selection, selectionArgs, groupBy, having, orderBy);
-    }
-
     public static DiasSemana getCurrentTreinoFromCursor(Cursor cursor) {
         final int posId = cursor.getColumnIndex(_ID);
         final int posNomeMes = cursor.getColumnIndex(NOME_MES);
@@ -66,4 +50,24 @@ public class DBTableDiasSemana implements BaseColumns {
 
         return diasSemana;
     }
+
+
+    public long insert(ContentValues values){
+        return db.insert(DATABASENAME_D,null,values);
+    }
+
+    public int update(ContentValues values,String whereClause,String[] whereArgs){
+        return db.update(DATABASENAME_D,values, whereClause, whereArgs);
+    }
+
+    public int delete(String whereClause, String[] whereArgs) {
+        return db.delete(DATABASENAME_D,whereClause,whereArgs);
+    }
+
+
+    public Cursor query (String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+        return db.query(DATABASENAME_D, columns, selection, selectionArgs, groupBy, having, orderBy);
+    }
+
+
 }

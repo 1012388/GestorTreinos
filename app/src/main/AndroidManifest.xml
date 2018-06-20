@@ -23,10 +23,19 @@
             android:name=".TreinoActivity"
             android:label="@string/title_activity_treino"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <!--<provider android:authorities="pt.ipg."
+        android:name=""
+        android:exported="false"
+        />-->
+
         <activity
-            android:name=".EditTreinoActivity"
+            android:name=".EditExercicioActivity"
             android:label="@string/title_activity_edit_treino"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
     </application>
 
 </manifest>

@@ -6,5 +6,6 @@
         android:title="Adicionar exercicio" />
     <item
         android:id="@+id/action_EliminarEx"
+        android:layout_height="match_parent"
         android:title="Eliminar exercicio" />
 </menu>

@@ -7,13 +7,15 @@ import android.provider.BaseColumns;
 
 public class DBTableTreino implements BaseColumns {
 
+    public static final String DATABASENAME_T = "treinos";
+
     public static final String REPETICOES = "Repeticoes";
     public static final String EXERCICIO = "Exercicio";
     public static final String ID_DIA = "id_dia";
-    public static final String DATABASENAME_T = "treinos";
     public static final String PESO_USADO = "PesoUsado";
     public static final String SERIES = "Series";
     public static final String TOTAL_REPS = "Total_Reps";
+
     public static final String [] ALL_COLUMNS = new String[] { _ID,EXERCICIO,PESO_USADO,REPETICOES, SERIES, TOTAL_REPS};
     public static final String TREINO_ID = "Treino ID";
 
@@ -40,7 +42,7 @@ public class DBTableTreino implements BaseColumns {
 
      public static ContentValues getContentValues(Treinos treino){
          ContentValues values = new ContentValues();
-         values.put(TREINO_ID, treino.getTreinoId());
+
          values.put(EXERCICIO,treino.getExercicio());
          values.put(REPETICOES,treino.getRepeticoes());
          values.put(PESO_USADO,treino.getPesoUsado());
@@ -63,7 +65,7 @@ public class DBTableTreino implements BaseColumns {
         treinos.setExercicio(cursor.getString(posExercicio));
         treinos.setRepeticoes(cursor.getInt(posRepeticoes));
         treinos.setSeries(cursor.getInt(posSeries));
-        //treinos.getTotal_Reps(cursor.getInt(posRepeticoes), cursor.getInt(posSeries));
+        treinos.getTotal_Reps(cursor.getInt(posRepeticoes), cursor.getInt(posSeries));
         treinos.setIdDia(cursor.getInt(posId_Dia));
 
         return treinos;

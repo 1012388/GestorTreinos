@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.view.View;
@@ -76,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        //TODO:IR À MAIN ATIVITY NO GITHUB
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        TreinoCursorAdapter treinoCursorAdapter = new TreinoCursorAdapter();
+
     }
 
     private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos

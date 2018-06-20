@@ -11,4 +11,8 @@
     <string name="nome_exerc_cio">Nome Exercício</string>
     <string name="treino_1">Treino 1</string>
     <string name="title_activity_edit_treino">EditTreinoActivity</string>
+    <string name="n_mero_de_repeti_es">Número de repetições</string>
+    <string name="exercicio">Exercicio</string>
+    <string name="peso_kg">Peso(KG)</string>
+    <string name="n_mero_de_s_ries">Número de Séries</string>
 </resources>
