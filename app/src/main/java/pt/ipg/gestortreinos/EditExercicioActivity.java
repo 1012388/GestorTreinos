@@ -1,7 +1,6 @@
 package pt.ipg.gestortreinos;
 
 import android.app.LoaderManager;
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -9,8 +8,8 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -20,17 +19,20 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.nio.charset.MalformedInputException;
+public class EditExercicioActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-public class EditExercicioActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<> {
-
+    public static final int TREINO_CURSOR_LOADER_ID = 0;
     private EditText editTextExercicio;
     private EditText editTextSerie;
     private EditText editTextPeso;
     private EditText editTextReps;
 
-    private Spinner spinner;
+    private Spinner spinnerTreino;
     private Treinos treino;
+    private String exercicio;
+    private int pesoUsado;
+    private int repeticoes;
+    private int series;
 
 
     @Override
@@ -65,27 +67,114 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
         }
 
 
-        EditText editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
-        EditText editTextPeso = (EditText) findViewById(R.id.editTextPeso);
-        EditText editTextRep = (EditText) findViewById(R.id.editTextRep);
-        EditText editTextSerie = (EditText) findViewById(R.id.editTextSerie);
-        Spinner spinnerDia = (Spinner) findViewById(R.id.spinnerDia);
+        editTextExercicio = (EditText) findViewById(R.id.editTextExercicio);
+        editTextPeso = (EditText) findViewById(R.id.editTextPeso);
+        editTextReps = (EditText) findViewById(R.id.editTextRep);
+        editTextSerie = (EditText) findViewById(R.id.editTextSerie);
+        spinnerTreino = (Spinner) findViewById(R.id.spinnerDia);
 
         treino = DBTableTreino.getCurrentTreinoFromCursor(cursorTreino);
 
+        editTextExercicio.setText(treino.getTreinoId());
+        editTextPeso.setText(treino.getPesoUsado());
+        editTextReps.setText(treino.getRepeticoes());
+        editTextSerie.setText(treino.getSeries());
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //getSupportLoaderManager().initLoader(TREINO_CURSOR_LOADER_ID,null,this);
     }
 
-
-    /**
-     * Instantiate and return a new Loader for the given ID.
-     *
-     * @param id   The ID whose loader is to be created.
-     * @param args Any arguments supplied by the caller.
-     * @return Return a new Loader instance that is ready to start loading.
-     */
     @Override
-    public Loader onCreateLoader(int id, Bundle args) {
+    protected void onResume() {
+        super.onResume();
+        //getSupportLoaderManager().restartLoader(TREINO_CURSOR_LOADER_ID,null,this);
+    }
+
+    public void cancelar(View view) {
+        finish();
+        return;
+    }
+
+    public void guardar(View view) {
+        try {
+            exercicio = editTextExercicio.getText().toString();
+            if (exercicio.trim().isEmpty()) {
+                editTextExercicio.setError(TreinoActivity.TEM_DE_COLOCAR_UM_EXERCÍCIO);
+                editTextExercicio.requestFocus();
+
+            }
+
+        } catch (NumberFormatException e) {//Apanhar se o campo ficar vazio
+            editTextExercicio.setError(TreinoActivity.TEM_DE_COLOCAR_UM_EXERCÍCIO);
+            editTextExercicio.requestFocus();
+            return;
+        }
+
+        try {
+            pesoUsado = Integer.parseInt(editTextPeso.getText().toString());
+            if (pesoUsado <= 0) {
+                editTextPeso.setError(TreinoActivity.NUMERO_INVALIDO_DE_PESO_USADO);
+                editTextPeso.requestFocus();
+            }
+
+        } catch (NumberFormatException e) {
+            editTextPeso.setError(TreinoActivity.NUMERO_INVALIDO_DE_PESO_USADO);
+            editTextPeso.requestFocus();
+            return;
+        }
+
+        try {
+            repeticoes = Integer.parseInt(editTextReps.getText().toString());
+            if (repeticoes <= 0) {
+                editTextReps.setError(TreinoActivity.NUMERO_DE_REPETICOES_INVALIDO);
+                editTextReps.requestFocus();
+            }
+        } catch (NumberFormatException e) {
+            editTextReps.setError(TreinoActivity.NUMERO_DE_REPETICOES_INVALIDO);
+            editTextReps.requestFocus();
+            return;
+        }
+
+        try {
+            series = Integer.parseInt(editTextSerie.getText().toString());
+            if (series <= 0) {//se o idTreino for mal introduzido
+                editTextSerie.setError(TreinoActivity.NUMERO_DE_SERIES_INVALIDO);
+                editTextSerie.requestFocus();
+            }
+        } catch (NumberFormatException e) {
+            editTextSerie.setError(TreinoActivity.NUMERO_DE_SERIES_INVALIDO);
+            editTextSerie.requestFocus();
+            return;
+        }
+
+        treino.setExercicio(editTextExercicio.getText().toString());
+        treino.setPesoUsado(Integer.parseInt(editTextExercicio.getText().toString()));
+        treino.setRepeticoes(Integer.parseInt(editTextReps.getText().toString()));
+        treino.setSeries(Integer.parseInt(editTextSerie.getText().toString()));
+
+        int linhasAfetadas = getContentResolver().update(
+                Uri.withAppendedPath(TreinoContentProvider.TREINO_URI, Integer.toString(treino.getTreinoId())),
+                DBTableTreino.getContentValues(treino),
+                null,
+                null
+        );
+
+        if (linhasAfetadas > 0) {
+            Toast.makeText(getApplicationContext(), "Update foi feito com sucesso", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        Toast.makeText(getApplicationContext(), "Update foi feito com insucesso", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        if (id == TREINO_CURSOR_LOADER_ID) {
+            return new CursorLoader(this, TreinoContentProvider.TREINO_URI
+                    , DBTableTreino.ALL_COLUMNS, null, null, null);
+        }
         return null;
     }
 
@@ -123,29 +212,36 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
      * {@link CursorAdapter#swapCursor(Cursor)}
      * method so that the old Cursor is not closed.
      * </ul>
+     * <p>
+     * <p>This will always be called from the process's main thread.
      *
      * @param loader The Loader that has finished.
      * @param data   The data generated by the Loader.
      */
+
     @Override
-    public void onLoadFinished(Loader loader, Object data) {
-        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(
-                this, android.R.layout.simple_list_item_1,
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        SimpleCursorAdapter cursorAdapterTreino = new SimpleCursorAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
                 data,
-                new String[] (DBTableTreino.TREINO_ID),
-                new int[] (android.R.id.text1)
+                new String[]{DBTableTreino.TREINO_ID},
+                new int[]{android.R.id.text1}
         );
-        Intent intent;
-        int treinoId = intent.getIntExtra(MainActivity.TREINO_ID, -1);
 
-        if (treinoId == -1) {
-            finish();
-            return;
+        spinnerTreino.setAdapter(cursorAdapterTreino);
+
+        int idTreino = treino.getTreinoId();
+
+        for (int i = 0; i < spinnerTreino.getCount(); i++) {
+            Cursor cursor = (Cursor) spinnerTreino.getItemAtPosition(i);
+            final int posID = cursor.getColumnIndex(DBTableTreino._ID);
+
+            if (idTreino == cursor.getInt(posID)) {
+                spinnerTreino.setSelection(i);
+                break;
+            }
         }
-
-        //getContentResolver().query(Uri.withAppendedPath(TreinoContentProvider.TREINO_ID,);
-
-
     }
 
     /**
@@ -155,33 +251,8 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
      *
      * @param loader The Loader that is being reset.
      */
+
     @Override
-    public void onLoaderReset(Loader loader) {
-
-    }
-
-    public void Guardar(View v) {
-        //todo:validações! Copiar do treino ativity
-
-        treino.setExercicio(editTextExercicio.getText());
-        treino.setSeries(editTextSerie.getText());
-        treino.setPesoUsado(editTextPeso.getText());
-        treino.setRepeticoes(editTextReps.getText());
-
-
-        int linhasAfetadas = getContentResolver().update(
-                Uri.withAppendedPath(),
-                DBTableTreino.getContentValues(treino),
-                null,
-                null
-        );
-
-        if (linhasAfetadas > 0) {
-            Toast.makeText(this, "Sucesso!", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
-        Toast.makeText(this, "Insucesso!", Toast.LENGTH_SHORT).show();
+    public void onLoaderReset(@Nullable Loader<Cursor> loader) {
     }
 }

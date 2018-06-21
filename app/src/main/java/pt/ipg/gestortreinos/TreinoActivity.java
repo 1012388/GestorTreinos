@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +57,10 @@ public class TreinoActivity extends AppCompatActivity {
     private static String[] DIA_ID_COLUMN = new String[]{"_ID"};
     private boolean novosValores = false;
 
+    Treinos treino = new Treinos();
+
+    private TreinoCursorAdapter treinoCursorAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +78,27 @@ public class TreinoActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        //TODO:IR À MAIN ATIVITY NO GITHUB
+        RecyclerView recyclerViewTreino = (RecyclerView) findViewById(R.id.recyclerView);
+
+        recyclerViewTreino.setLayoutManager(new LinearLayoutManager(this));
+        treinoCursorAdapter = new TreinoCursorAdapter(this);
+
+        recyclerViewTreino.setAdapter(treinoCursorAdapter);
+
+        treinoCursorAdapter.setViewHolderClickListener(new View.OnClickListener() {
+            /**
+             * Called when a view has been clicked.
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v) {
+                adicionarExercicio();
+            }
+        });
+
 
     }
 
@@ -301,10 +328,21 @@ public class TreinoActivity extends AppCompatActivity {
         if(id == R.id.action_Eliminar){//Eliminar treino
            // deleteTreino();
 
-        }else if(id== R.id.action_AdicionarEx) {//Alterar nome do treino
-            //adicionarExercicio();
+        } else if (id == R.id.action_AdicionarEx) {//Alterar nome do treino
+            adicionarExercicio();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void adicionarExercicio() {
+        int treino_id = treinoCursorAdapter.getLastTreinoClicked();
+
+        Intent intent = new Intent(this, EditExercicioActivity.class);
+
+        intent.putExtra(MainActivity.TREINO_ID, treino_id);
+
+
+        startActivity(intent);
     }
 
     /*private void adicionarExercicio() {

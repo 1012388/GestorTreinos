@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
@@ -38,11 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //ListView listView;
-    //ArrayList<Button> arrayList = new ArrayList<Button>();
-
-    //ArrayAdapter <Button> adapter = new ArrayAdapter<Button>(MainActivity.this,android.R.layout.simple_list_item_1,arrayList);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,37 +46,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //listView.setAdapter(adapter);
         TextView textView = (TextView) findViewById(R.id.textView);
-        //textView.setText("Dia: "+diasSemana.getAndroidSystemDay()+"\n Mês:"+diasSemana.getAndroidSystemMonth());
         textView.setText(" " + diasSemana.getIdDia() + "/" + diasSemana.getNomeMes() + "/" + diasSemana.getAndroidSystemYear());
-
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //seClicado(view);
                 if (diasSemana.getAndroidSystemDay() != diasSemana.getAndroidSystemDay() || seClicado() > 2) {//se for no mesmo dia e se clicar 2 vezes
-                    //finish();
                     Toast.makeText(getApplicationContext(), "Erro!", Toast.LENGTH_SHORT).show();
-                    /*try {
-                      throw new Exception("Error!!");
-                      } catch (Exception e) {
-                      e.printStackTrace();
-                   }*/
                 } else {
                     createNewPraticeButton();
                 }
             }
-
         });
 
-        //TODO:IR À MAIN ATIVITY NO GITHUB
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        TreinoCursorAdapter treinoCursorAdapter = new TreinoCursorAdapter();
 
     }
 
@@ -96,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         b1 = new Button(MainActivity.this);
         tag_id = conta;
-        //treino.setTreinoId(tag_id);
-        //tag_id = seClicado();
+
 
         b1.setId(tag_id);
         b1.setText("Treino" + tag_id);
@@ -116,10 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-
                 showTreinos();//Abrir Treino Activity
-
-
             }
         });
 
@@ -171,8 +147,5 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
-
-//TODO:Criar mensagem de dialog. Quando cria um treino. Aparece uma janela a dizer se quer eliminar ou abrir.
-    //TODO:Implementar o Recycle View
 
 }
