@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 
 public class DBTableTreino implements BaseColumns {
 
-    public static final String DATABASENAME_T = "treinos";
+    public static final String DATABASENAME_T = "treino";
 
     public static final String REPETICOES = "Repeticoes";
     public static final String EXERCICIO = "Exercicio";
@@ -59,16 +59,16 @@ public class DBTableTreino implements BaseColumns {
         final int posSeries = cursor.getColumnIndex(SERIES);
         final int posId_Dia = cursor.getColumnIndex(ID_DIA);
 
-        Treinos treinos = new Treinos();
+        Treinos treino = new Treinos();
 
-        treinos.setTreinoId(cursor.getInt(posId));
-        treinos.setExercicio(cursor.getString(posExercicio));
-        treinos.setRepeticoes(cursor.getInt(posRepeticoes));
-        treinos.setSeries(cursor.getInt(posSeries));
-        treinos.getTotal_Reps(cursor.getInt(posRepeticoes), cursor.getInt(posSeries));
-        treinos.setIdDia(cursor.getInt(posId_Dia));
+        treino.setTreinoId(cursor.getInt(posId));
+        treino.setExercicio(cursor.getString(posExercicio));
+        treino.setRepeticoes(cursor.getInt(posRepeticoes));
+        treino.setSeries(cursor.getInt(posSeries));
+        treino.getTotal_Reps(cursor.getInt(posRepeticoes), cursor.getInt(posSeries));
+        treino.setIdDia(cursor.getInt(posId_Dia));
 
-        return treinos;
+        return treino;
     }
 
     public long insert(ContentValues values){ return db.insert(DATABASENAME_T,null,values);

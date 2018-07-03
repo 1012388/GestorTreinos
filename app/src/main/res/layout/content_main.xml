@@ -16,26 +16,28 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>
-
-        <ScrollView
-            android:id="@+id/scroolView"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        </android.support.v7.widget.Toolbar>
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="119dp"
-                    android:text="TextView" />
-            </LinearLayout>
-        </ScrollView>
+        <!-- <ScrollView
+             android:id="@+id/scroolView"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+             <LinearLayout
+                 android:id="@+id/linearLayout"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical">
+
+                 <TextView
+                     android:id="@+id/textView"
+                     android:layout_width="match_parent"
+                     android:layout_height="119dp"
+                     android:text="TextView" />
+             </LinearLayout>
+         </ScrollView>-->
 
     </android.support.design.widget.AppBarLayout>
 

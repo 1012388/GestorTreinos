@@ -2,25 +2,21 @@ package pt.ipg.gestortreinos;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TreinoActivity extends AppCompatActivity {
-    public static final String DIA_INVALIDO = "Dia Inválido";
+public abstract class TreinoActivity extends AppCompatActivity {
+
     public static final String NUMERO_DE_REPETICOES_INVALIDO = "Número de repetições inválido";
     public static final String NUMERO_DE_SERIES_INVALIDO = "Número de séries inválido";
     public static final String NUMERO_INVALIDO_DE_PESO_USADO = "Número inválido de peso usado";
@@ -38,7 +34,6 @@ public class TreinoActivity extends AppCompatActivity {
     Treinos treinos = new Treinos();
     DiasSemana diasSemana = new DiasSemana();
 
-    final ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
     private int idTreino = 0;
     private String exercicio = "";
     private int repeticoes = 0;
@@ -59,8 +54,6 @@ public class TreinoActivity extends AppCompatActivity {
 
     Treinos treino = new Treinos();
 
-    private TreinoCursorAdapter treinoCursorAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,27 +71,6 @@ public class TreinoActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        //TODO:IR À MAIN ATIVITY NO GITHUB
-        RecyclerView recyclerViewTreino = (RecyclerView) findViewById(R.id.recyclerView);
-
-        recyclerViewTreino.setLayoutManager(new LinearLayoutManager(this));
-        treinoCursorAdapter = new TreinoCursorAdapter(this);
-
-        recyclerViewTreino.setAdapter(treinoCursorAdapter);
-
-        treinoCursorAdapter.setViewHolderClickListener(new View.OnClickListener() {
-            /**
-             * Called when a view has been clicked.
-             *
-             * @param v The view that was clicked.
-             */
-            @Override
-            public void onClick(View v) {
-                adicionarExercicio();
-            }
-        });
-
 
     }
 
@@ -149,7 +121,6 @@ public class TreinoActivity extends AppCompatActivity {
 
         try {
             exercicio = editTextExercicio.getText().toString();
-            //textView_Total.setText("Exercicio : "+ exercicio);
 
             if (exercicio.trim().isEmpty()) {
                 editTextExercicio.setError(TEM_DE_COLOCAR_UM_EXERCÍCIO);
@@ -157,14 +128,9 @@ public class TreinoActivity extends AppCompatActivity {
 
             } else {
                 treino.setExercicio(exercicio);
-
-                /*if (getExercicioFromTable() != "") {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
-                    dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
-                    //return;
-                }*/
             }
 
-        } catch (NumberFormatException/*NullPointerException*/ e) {//Apanhar se o campo ficar vazio
+        } catch (NumberFormatException e) {//Apanhar se o campo ficar vazio
             editTextExercicio.setError(TEM_DE_COLOCAR_UM_EXERCÍCIO);
             editTextExercicio.requestFocus();
             return;
@@ -177,10 +143,6 @@ public class TreinoActivity extends AppCompatActivity {
                 editTextPeso.requestFocus();
             } else if (pesoUsado > 0) {
                 treino.setPesoUsado(pesoUsado);//Introduzir sempre o pesoUsado
-
-                /*if (getPesoFromTable() != 0) {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
-                    dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
-                }*/
             }
         } catch (NumberFormatException e) {
             editTextPeso.setError(NUMERO_INVALIDO_DE_PESO_USADO);
@@ -195,10 +157,6 @@ public class TreinoActivity extends AppCompatActivity {
                 editTextRep.requestFocus();
             } else {//se for bem introduzido
                 treino.setRepeticoes(repeticoes);
-
-                /*if (getRepeticoesFromTable() != 0) {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
-                    dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
-                }*/
             }
 
         } catch (NumberFormatException e) {
@@ -215,10 +173,6 @@ public class TreinoActivity extends AppCompatActivity {
 
             }else {
                 treino.setSeries(series);
-
-                /*if (getSeriesFromTable() != 0) {//Se o utilizador quiser alterar o pesoUsado,então tem de clicar outra vez para guardar, e nesse caso tem de ser feito o update para a tabela
-                    dbTableTreino.update(DBTableTreino.getContentValues(treinos), DBTableTreino._ID + "=?", null);
-                }*/
             }
         } catch (NumberFormatException e) {
             editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
@@ -246,67 +200,6 @@ public class TreinoActivity extends AppCompatActivity {
 
         db.close();
     }
-    //todo: As funções getFromTables estão erradas!! IR A VER COMO FIZ NA função createTreino para inserir na BD.
-
-
-
-    private String getExercicioFromTable() {
-        String ExercicioFromTable = "";
-
-        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(this);
-
-        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-        String query_reps = "SELECT " + DBTableTreino.EXERCICIO + " FROM treino WHERE " + DBTableTreino._ID + " =?";
-        db.rawQuery(query_reps, new String[]{String.valueOf(ExercicioFromTable)});
-        db.close();
-
-        /*
-        SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
-
-        DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);
-        DBTableTreino dbTableTreino = new DBTableTreino(db);
-        Treinos treino = new Treinos();
-        DiasSemana diasSemanas = new DiasSemana();*/
-
-        return ExercicioFromTable;
-
-    }
-
-    private int getPesoFromTable() {
-        int PesoFromTable = 0;
-
-        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(this);
-
-        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-        String query_reps = "SELECT " + DBTableTreino.PESO_USADO + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
-        db.rawQuery(query_reps, new String[]{String.valueOf(PesoFromTable)});
-        db.close();
-
-        return PesoFromTable;
-    }
-
-    private int getRepeticoesFromTable() {
-        int repeticoesFromTable = 0;
-
-        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-        String query_reps = "SELECT " + DBTableTreino.REPETICOES + " FROM " + DBTableTreino.DATABASENAME_T + " WHERE " + DBTableTreino._ID + " =?";
-        db.rawQuery(query_reps, new String[]{String.valueOf(repeticoesFromTable)});
-
-        db.close();
-
-        return repeticoesFromTable;
-    }
-
-    /*private int getSeriesFromTable() {
-
-        SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();
-        db.close();
-
-        return seriesFromTable;
-    }*/
-
-
-
 
 
 
@@ -328,14 +221,14 @@ public class TreinoActivity extends AppCompatActivity {
         if(id == R.id.action_Eliminar){//Eliminar treino
            // deleteTreino();
 
-        } else if (id == R.id.action_AdicionarEx) {//Alterar nome do treino
+        } else if (id == R.id.action_AdicionarEx) {//adicionar um novo exercicio
             adicionarExercicio();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void adicionarExercicio() {
-        int treino_id = treinoCursorAdapter.getLastTreinoClicked();
+        int treino_id = treino.getTreinoId();
 
         Intent intent = new Intent(this, EditExercicioActivity.class);
 
@@ -344,34 +237,6 @@ public class TreinoActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
-
-    /*private void adicionarExercicio() {
-        String[]field_names = {"Exercicio","Peso","Repetições","Séries","TotalRepetições"};
-        LinearLayout linearLayoutTreino = (LinearLayout) findViewById(R.id.linearLayoutTreino);
-        //CoordinatorLayout layoutTreinoParent = (CoordinatorLayout) findViewById(R.id.layoutTreinoParent);
-        int tag = 0;
-        int total = treinos.getTotal_Reps(treinos.setRepeticoes(3),treinos.setSeries(3));//
-        for (int i = 0; i <= 4 ; i++) {
-            tag = i;
-            EditText1 = new EditText(TreinoActivity.this);
-            EditText1.setTreinoId(i);
-            EditText1.setText(field_names[i]);
-            EditText1.setTag(tag);
-            linearLayoutTreino.addView(EditText1);
-            if (tag == 4) {
-                TextView TextView1 = new TextView(TreinoActivity.this);
-                TextView1.setLayoutParams(layoutParams);
-                TextView1.setText(field_names[tag]+":"+String.valueOf(total));
-            }
-        }
-        //editTextExercicio
-        if(EditText1.getTreinoId()== 0) {
-            EditText1.setInputType(InputType.TYPE_CLASS_TEXT);
-        } else{//editTextPeso,Reps e Series que são todos numeros
-            EditText1.setInputType(InputType.TYPE_CLASS_NUMBER);
-        }
-
-    }*/
 
     private void deleteTreino() {
         //eliminar botão escolhido
@@ -382,39 +247,7 @@ public class TreinoActivity extends AppCompatActivity {
          */
    }
 
-    /*private int verificaNLinhasTreinoBD(Treinos treinos) {
-        int linha = -1;
-
-        if (Integer.parseInt(query) > linha) {
-            return linha = cursor.getCount();//foi introduzido x linhas na tabela Treino
-        } else {
-            return linha = -1;//Então não foi nenhuma linha introduzida na tabela Treino
-        }
 
 
 
-
-    }*/
-
-
-    private int verificarNLinhasDiaBD(DiasSemana diasSemana) {
-        int linha = -1;
-        DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(getApplicationContext());
-
-        SQLiteDatabase readableDiasDatabase = dbTreinoOpenHelper.getReadableDatabase();
-
-        DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(readableDiasDatabase);
-
-        Cursor cursor = dbTableDiasSemana.query(TREINO_ID_COLUMN, null,
-                null, null
-                , null, null
-        );
-
-        if (cursor.getCount() > linha) {
-            return linha = cursor.getCount();//foi introduzido x linhas na tabela Treino
-        } else {
-            return linha = -1;//Então não foi nenhuma linha introduzida na tabela Treino
-        }
-
-    }
 }

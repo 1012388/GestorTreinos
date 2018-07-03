@@ -38,8 +38,8 @@ public class TreinoContentProvider extends ContentProvider {
     private static UriMatcher getTreinosUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-        uriMatcher.addURI(AUTHORITY, "treinos", TREINO);
-        uriMatcher.addURI(AUTHORITY, "treinos/#", TREINO_ID);
+        uriMatcher.addURI(AUTHORITY, "treino", TREINO);
+        uriMatcher.addURI(AUTHORITY, "treino/#", TREINO_ID);
 
         uriMatcher.addURI(AUTHORITY, "DiasSemana", DIASSEMANAS);
         uriMatcher.addURI(AUTHORITY, "diasSemana/#", DIASSEMANAS_ID);
@@ -68,14 +68,11 @@ public class TreinoContentProvider extends ContentProvider {
             case TREINO:
                 return new DBTableTreino(db).query(projection, selection, selectionArgs, null, null, sortOrder);
 
-
             case TREINO_ID:
                 return new DBTableTreino(db).query(projection, selection, selectionArgs, null, null, sortOrder);
 
-
             case DIASSEMANAS:
                 return new DBTableDiasSemana(db).query(projection, selection, selectionArgs, null, null, sortOrder);
-
 
             case DIASSEMANAS_ID:
                 return new DBTableDiasSemana(db).query(projection, selection, selectionArgs, null, null, sortOrder);
