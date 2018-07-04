@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -33,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AppCompatActivity /*implements LoaderManager.LoaderCallbacks<Cursor>*/ {
     public static final String VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO = "Vezes que clicado em adicionar treino";
     public static final String TREINO_ID = "Treino ID";
     public static final String DIA = "Dia";
@@ -43,11 +44,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     Treinos treino = new Treinos();
     DiasSemana diasSemana = new DiasSemana();
 
-    private TreinoCursorAdapter treinoCursorAdapter;
+    //private TreinoCursorAdapter treinoCursorAdapter;
 
     ContentValues values = new ContentValues();
 
-    public static final int TREINO_CURSOR_LOADER_ID = 0;
+    //public static final int TREINO_CURSOR_LOADER_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +67,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if (diasSemana.getAndroidSystemDay() != diasSemana.getAndroidSystemDay() || seClicado() > 2) {//se for no mesmo dia e se clicar 2 vezes
                     Toast.makeText(getApplicationContext(), "Erro!", Toast.LENGTH_SHORT).show();
                 } else {
-                    //createNewPraticeButton();
+                    createNewPraticeButton();
                 }
             }
         });
 
-        RecyclerView recyclerViewTreino = (RecyclerView) findViewById(R.id.recyclerView);
+      /*  RecyclerView recyclerViewTreino = (RecyclerView) findViewById(R.id.recyclerView);
 
         recyclerViewTreino.setLayoutManager(new LinearLayoutManager(this));
         treinoCursorAdapter = new TreinoCursorAdapter(this);
@@ -84,22 +85,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
              *
              * @param v The view that was clicked.
              */
-            @Override
+            /*@Override
             public void onClick(View v) {
                 showTreinos();
             }
         });
 
-        getSupportLoaderManager().initLoader(TREINO_CURSOR_LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(TREINO_CURSOR_LOADER_ID, null, this);*/
     }
 
-   /* private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos
+    private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+
         DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(getApplicationContext());
         SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
 
         DBTableTreino dbTableTreino = new DBTableTreino(db);
+
+
         DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);
 
 
@@ -133,8 +137,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //Inserção para a base de dados
         dbTableDiasSemana.insert(DBTableDiasSemana.getContentValues(diasSemana));
         dbTableTreino.insert(DBTableTreino.getContentValues(treino));
+
         db.close();
-    }*/
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -154,9 +159,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (id == R.id.action_Eliminar) {//Adicionar treino
             //deleteTreinoButton();
             //conta++;
+            Toast.makeText(getApplicationContext(), "Lista de todos os treino:", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_Listar) {
+            showListar();
             Toast.makeText(getApplicationContext(), "A eliminar o treino:" + tag_id, Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showListar() {
+        Intent intent = new Intent(this, ListaActivity.class);
+        startActivity(intent);
     }
 
 
@@ -176,11 +189,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         startActivity(intent);
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         getSupportLoaderManager().restartLoader(TREINO_CURSOR_LOADER_ID, null, this);
-    }
+    }*/
 
     /**
      * Instantiate and return a new Loader for the given ID.
@@ -191,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * @param args Any arguments supplied by the caller.
      * @return Return a new Loader instance that is ready to start loading.
      */
-    @NonNull
+   /* @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         if (id == TREINO_CURSOR_LOADER_ID) {
@@ -243,23 +256,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * @param loader The Loader that has finished.
      * @param data   The data generated by the Loader.
      */
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        treinoCursorAdapter.refreshData(data);
-    }
 
-    /**
-     * Called when a previously created loader is being reset, and thus
-     * making its data unavailable.  The application should at this point
-     * remove any references it has to the Loader's data.
-     * <p>
-     * <p>This will always be called from the process's main thread.
-     *
-     * @param loader The Loader that is being reset.
-     */
-    @Override
+    /*@Override
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+            treinoCursorAdapter.refreshData(data);
+        }
+
+        /**
+         * Called when a previously created loader is being reset, and thus
+         * making its data unavailable.  The application should at this point
+         * remove any references it has to the Loader's data.
+         * <p>
+         * <p>This will always be called from the process's main thread.
+         *
+         * @param loader The Loader that is being reset.
+         */
+    /*@Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         treinoCursorAdapter.refreshData(null);
-    }
 
+    }*/
 }

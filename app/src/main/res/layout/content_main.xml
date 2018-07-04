@@ -20,7 +20,7 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <!-- <ScrollView
+        <ScrollView
              android:id="@+id/scroolView"
              android:layout_width="match_parent"
              android:layout_height="wrap_content">
@@ -37,13 +37,9 @@
                      android:layout_height="119dp"
                      android:text="TextView" />
              </LinearLayout>
-         </ScrollView>-->
+        </ScrollView>
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </FrameLayout>

@@ -2,9 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pt.ipg.gestortreinos.MainActivity">
+
+    <item
+        android:id="@+id/action_Listar"
+        android:orderInCategory="102"
+        android:title="Listar treinos" />
     <item
         android:id="@+id/action_Eliminar"
-        android:orderInCategory="102"
+        android:orderInCategory="103"
         android:title="@string/eliminar_treino" />
 
 </menu>

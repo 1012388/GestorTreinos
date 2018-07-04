@@ -29,6 +29,7 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
     private EditText editTextPeso;
     private EditText editTextReps;
 
+
     private Spinner spinnerTreino;
     private Treinos treino;
     private String exercicio;
@@ -74,7 +75,6 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
         editTextPeso = (EditText) findViewById(R.id.editTextPeso);
         editTextReps = (EditText) findViewById(R.id.editTextRep);
         editTextSerie = (EditText) findViewById(R.id.editTextSerie);
-        spinnerTreino = (Spinner) findViewById(R.id.spinnerTreino);
 
         treino = DBTableTreino.getCurrentTreinoFromCursor(cursorTreino);
 
@@ -86,7 +86,7 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportLoaderManager().initLoader(TREINO_CURSOR_LOADER_ID, null, this);
-        //getSupportLoaderManager().initLoader(,null,);
+
     }
 
     @Override

@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public abstract class TreinoActivity extends AppCompatActivity {
+public class TreinoActivity extends AppCompatActivity {
 
     public static final String NUMERO_DE_REPETICOES_INVALIDO = "Número de repetições inválido";
     public static final String NUMERO_DE_SERIES_INVALIDO = "Número de séries inválido";
@@ -65,7 +65,6 @@ public abstract class TreinoActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 createTreino();//Cria o treino e só depois dá a mensagem para guardar
                 Snackbar.make(view, "A guardar...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -81,14 +80,12 @@ public abstract class TreinoActivity extends AppCompatActivity {
 
         DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(this);
         SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
-        SQLiteDatabase readableDatabase = dbTreinoOpenHelper.getReadableDatabase();
+
 
         DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);
         DBTableTreino dbTableTreino = new DBTableTreino(db);
         Treinos treino = new Treinos();
         DiasSemana diasSemanas = new DiasSemana();
-
-
 
         if (treinoID < 0 || idDia == 0) {
             Toast.makeText(getApplicationContext(), "A fechar porque não há ids", Toast.LENGTH_SHORT).show();
@@ -98,10 +95,10 @@ public abstract class TreinoActivity extends AppCompatActivity {
 
         idTreino = treinoID;
 
-        String exercicio = "";
+        /*String exercicio = "";
         int repeticoes = 0;
         int series = 0;
-        int pesoUsado = 0;
+        int pesoUsado = 0;*/
         //int total_Reps = 0;
 
 
@@ -117,7 +114,6 @@ public abstract class TreinoActivity extends AppCompatActivity {
         diasSemanas.setNomeMes(diasSemanas.getNomeMes());
         diasSemanas.setIdDia(idDia);
         treino.setTreinoId(idTreino);
-
 
         try {
             exercicio = editTextExercicio.getText().toString();
@@ -222,12 +218,12 @@ public abstract class TreinoActivity extends AppCompatActivity {
            // deleteTreino();
 
         } else if (id == R.id.action_AdicionarEx) {//adicionar um novo exercicio
-            adicionarExercicio();
+            //adicionarExercicio();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void adicionarExercicio() {
+   /* private void adicionarExercicio() {
         int treino_id = treino.getTreinoId();
 
         Intent intent = new Intent(this, EditExercicioActivity.class);
@@ -236,7 +232,7 @@ public abstract class TreinoActivity extends AppCompatActivity {
 
 
         startActivity(intent);
-    }
+    }*/
 
     private void deleteTreino() {
         //eliminar botão escolhido

@@ -114,8 +114,6 @@ public class TreinoContentProvider extends ContentProvider {
 
         UriMatcher matcher = getTreinosUriMatcher();
         long id = -1;
-
-
         switch (matcher.match(uri)) {
             case TREINO:
                 id = new DBTableTreino(db).insert(values);
