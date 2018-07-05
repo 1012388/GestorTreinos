@@ -36,6 +36,8 @@ public class TreinoDBTest {
          SQLiteDatabase db = dbTreinoOpenHelper.getReadableDatabase();//Abrir a bd para saber se existe
 
         assertTrue("Couldnt open/create db",db.isOpen());
+
+        db.execSQL("DROP TABLE IF EXISTS "+DBTableTreino.DATABASENAME_T);
         db.close();
     }
 

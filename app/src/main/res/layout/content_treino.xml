@@ -58,8 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.189"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDia"
-        tools:text="Exercicio" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDia" />
 
     <EditText
         android:id="@+id/editTextPeso"

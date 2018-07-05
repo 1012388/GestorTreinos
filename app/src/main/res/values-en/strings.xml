@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GestorTreinos</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="title_activity_treino">PracticeActivity</string>
+    <string name="alterar_nome_do_treino">Change practice name</string>
+    <string name="eliminar_treino">Delete practice</string>
+    <string name="adicionar_treino">Add practice</string>
+    <string name="data">date</string>
+    <string name="n_repeti_es">Repetition number</string>
+    <string name="nome_exerc_cio">Exercice Name</string>
+    <string name="treino_1">Pratice 1</string>
+    <string name="title_activity_edit_treino">EditPracticeActivity</string>
+    <string name="n_mero_de_repeti_es">Repetition Number</string>
+    <string name="exercicio">Exercice</string>
+    <string name="peso_kg">Weight(KG)</string>
+    <string name="n_mero_de_s_ries">Number of Sets</string>
+    <string name="title_activity_lista">ListActivity</string>
+    <string name="adicionar_exercicio">Add Exercice</string>
+    <string name="TOTAL">Total of Repetitions</string>
+    <string name="Guardar">Saving...</string>
+    <string name="Listar">List</string>
+    <string name="Erro">Error</string>
+    <string name="Listar_todos_os_treinos">List of all practices</string>
+    <string name="Erro_Iniciar">Error when iniating this activity</string>
+    <string name="Nao_foi_encontrado_nenhum_Treino">This practice was not found</string>
+    <string name="Update_Sucesso">Update was made sucessefuly</string>
+    <string name="Update_Insucesso">Update was not made sucessefully</string>
+</resources>

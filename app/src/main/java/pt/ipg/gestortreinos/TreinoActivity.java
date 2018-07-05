@@ -67,7 +67,7 @@ public class TreinoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createTreino();//Cria o treino e só depois dá a mensagem para guardar
-                Snackbar.make(view, "A guardar...", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, R.string.Guardar, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -181,21 +181,24 @@ public class TreinoActivity extends AppCompatActivity {
 
 
 
-        textView_Total.setText("Total de Repetições:" + treino.getRepeticoes() * treino.getSeries());
+
 
         //DEBUG
         //textView_Total.setText("" + dbTableTreino.getContentValues(treino));
-        //textView_Total.setText("" + dbTableDiasSemana.getContentValues(diasSemanas));
+        textView_Total.setText("" + dbTableDiasSemana.getContentValues(diasSemanas));
 
 
-        //dbTableDiasSemana.insert(dbTableDiasSemana.getContentValues(diasSemanas));
-        //dbTableTreino.insert(dbTableTreino.getContentValues(treino));
+        dbTableDiasSemana.insert(dbTableDiasSemana.getContentValues(diasSemanas));
+        dbTableTreino.insert(dbTableTreino.getContentValues(treino));
 
+        editTextExercicio.setText("");
         editTextRep.setText("");
         editTextPeso.setText("");
         editTextSerie.setText("");
         textView_Total.setText("");
 
+
+        //textView_Total.setText(getString(R.string.TOTAL) + treino.getRepeticoes() * treino.getSeries());
         db.close();
 
     }
@@ -216,7 +219,7 @@ public class TreinoActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if(id == R.id.action_Listar){//Eliminar treino
             showListar();
-            Toast.makeText(getApplicationContext(), "Lista de todos os treinos" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.Listar , Toast.LENGTH_SHORT).show();
 
         }
         return super.onOptionsItemSelected(item);

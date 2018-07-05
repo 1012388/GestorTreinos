@@ -21,11 +21,14 @@ public class DBTreinoOpenHelper extends SQLiteOpenHelper {
         DBTableTreino dbTableTreino = new DBTableTreino(db);
         DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);
 
+        //dbTableDiasSemana.dropTable();
         dbTableDiasSemana.create();
+
+        //dbTableTreino.dropTable();
         dbTableTreino.create();
 
         //if(!PRODUCTION){
-            seed(db);
+            //seed(db);
         //}
     }
 

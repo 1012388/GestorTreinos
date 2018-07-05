@@ -50,7 +50,7 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
         int treinoId = intent.getIntExtra(MainActivity.TREINO_ID, -1);
 
         if (treinoId == -1) {
-            Toast.makeText(getApplicationContext(), "Erro ao iniciar esta atividade", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.Erro_Iniciar, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -64,7 +64,7 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
         );
 
         if (!cursorTreino.moveToNext()) {
-            Toast.makeText(this, "Não foi encontrado nenhum Treino", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.Nao_foi_encontrado_nenhum_Treino, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -164,11 +164,11 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
         );
 
         if (linhasAfetadas > 0) {
-            Toast.makeText(getApplicationContext(), "Update foi feito com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.Update_Sucesso, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }else if (linhasAfetadas <= 0){
-            Toast.makeText(getApplicationContext(), "Update foi feito com insucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.Update_Insucesso, Toast.LENGTH_SHORT).show();
         }
     }
 

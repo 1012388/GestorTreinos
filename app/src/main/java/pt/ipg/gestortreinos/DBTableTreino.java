@@ -36,10 +36,15 @@ public class DBTableTreino implements BaseColumns {
                         TOTAL_REPS + " INTEGER NOT NULL," +
                         " FOREIGN KEY ( " + ID_DIA + " ) REFERENCES " +
                         DBTableDiasSemana.DATABASENAME_D+
-                        " (" + DBTableDiasSemana._ID + ") " + " )"
+                        " (" + DBTableDiasSemana._ID + ") " + " );"
         );
     }
 
+    public void dropTable(){
+        db.execSQL(
+                "DROP TABLE IF EXISTS "+DBTableTreino.DATABASENAME_T
+                );
+    }
      public static ContentValues getContentValues(Treinos treino){
          ContentValues values = new ContentValues();
 

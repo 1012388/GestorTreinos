@@ -20,13 +20,17 @@ public class DBTableDiasSemana implements BaseColumns {
     public void create(){
         db.execSQL(
                 "CREATE TABLE " + DATABASENAME_D + " (" +
-                        _ID + " INTEGER PRIMARY KEY , " +
-                        NOME_MES + " TEXT NOT NULL" +
-                        ")"
-                );
+                        _ID + " INTEGER PRIMARY KEY," +
+                        NOME_MES + " TEXT NOT NULL);");
 
     }
 
+
+    public void dropTable(){
+    db.execSQL(
+                "DROP TABLE IF EXISTS "+DBTableDiasSemana.DATABASENAME_D
+        );
+    }
     public static ContentValues getContentValues(DiasSemana DiasSemana){
         ContentValues values = new ContentValues();
 

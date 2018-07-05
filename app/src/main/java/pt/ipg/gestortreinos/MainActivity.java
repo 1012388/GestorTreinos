@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 if (diasSemana.getAndroidSystemDay() != diasSemana.getAndroidSystemDay() || seClicado() > 2) {//se for no mesmo dia e se clicar 2 vezes
-                    Toast.makeText(getApplicationContext(), "Erro!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.Erro, Toast.LENGTH_SHORT).show();
                 } else {
                     createNewPraticeButton();
                 }
@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity  {
         treino.setSeries(0);
         treino.setPesoUsado(0);
 
-        //Inserção para a base de dados
-        //dbTableDiasSemana.insert(DBTableDiasSemana.getContentValues(diasSemana));
+        //Inserção para a base de dado
+        // dbTableDiasSemana.insert(DBTableDiasSemana.getContentValues(diasSemana));
         //dbTableTreino.insert(DBTableTreino.getContentValues(treino));
         //dbTableDiasSemana.delete(null,null);
         //dbTableTreino.delete(null,null);
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity  {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_Listar) {
             showListar();
-            Toast.makeText(getApplicationContext(), "Lista de todos os treinos" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.Listar_todos_os_treinos , Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
