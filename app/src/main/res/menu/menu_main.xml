@@ -6,6 +6,6 @@
     <item
         android:id="@+id/action_Listar"
         android:orderInCategory="102"
-        android:title="Listar treinos" />
+        android:title="@string/Listar_Treinos" />
 
 </menu>

@@ -26,4 +26,9 @@
     <string name="Nao_foi_encontrado_nenhum_Treino">Não foi encontrado nenhum Treino</string>
     <string name="Update_Sucesso">Update foi feito com sucesso</string>
     <string name="Update_Insucesso">Update foi feito com insucesso</string>
+    <string name="Listar_Treinos">Listar treinos</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
+    <string name="textview">TextView</string>
+    <string name="Treino">Treino</string>
 </resources>

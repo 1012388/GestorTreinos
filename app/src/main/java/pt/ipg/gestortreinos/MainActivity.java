@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity  {
         tag_id = conta;
 
         b1.setId(tag_id);
-        b1.setText("Treino" + tag_id);
+        b1.setText(getString(R.string.Treino) + tag_id);
         b1.setTag(tag_id);
         tag_id++;
 

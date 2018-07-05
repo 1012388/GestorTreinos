@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GestorTreinos</string>
-    <string name="action_settings" translatable="false">Settings</string>
     <string name="title_activity_treino">PracticeActivity</string>
     <string name="alterar_nome_do_treino">Change practice name</string>
     <string name="eliminar_treino">Delete practice</string>
@@ -26,4 +25,9 @@
     <string name="Nao_foi_encontrado_nenhum_Treino">This practice was not found</string>
     <string name="Update_Sucesso">Update was made sucessefuly</string>
     <string name="Update_Insucesso">Update was not made sucessefully</string>
+    <string name="textview">TextView</string>
+    <string name="Listar_Treinos">List Practices</string>
+    <string name="cancelar">Cancel</string>
+    <string name="guardar">Save</string>
+    <string name="Treino">practice</string>
 </resources>
