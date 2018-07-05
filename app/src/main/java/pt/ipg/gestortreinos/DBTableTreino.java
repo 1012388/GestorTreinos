@@ -57,7 +57,7 @@ public class DBTableTreino implements BaseColumns {
         final int posExercicio = cursor.getColumnIndex(EXERCICIO);
         final int posRepeticoes = cursor.getColumnIndex(REPETICOES);
         final int posSeries = cursor.getColumnIndex(SERIES);
-        final int posTotal = cursor.getColumnIndex(TOTAL_REPS);
+
         final int posId_Dia = cursor.getColumnIndex(ID_DIA);
 
         Treinos treino = new Treinos();
@@ -65,8 +65,7 @@ public class DBTableTreino implements BaseColumns {
         treino.setTreinoId(cursor.getInt(posId));
         treino.setExercicio(cursor.getString(posExercicio));
         treino.setRepeticoes(cursor.getInt(posRepeticoes));
-        treino.setSeries(cursor.getInt(posSeries));
-        treino.getTotal_Reps(cursor.getInt(posRepeticoes), cursor.getInt(posSeries));
+        treino.setSeries(cursor.getInt(posSeries)); 
         treino.setIdDia(cursor.getInt(posId_Dia));
 
         return treino;

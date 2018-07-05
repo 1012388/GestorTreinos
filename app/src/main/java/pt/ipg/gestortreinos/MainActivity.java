@@ -116,6 +116,14 @@ public class MainActivity extends AppCompatActivity  {
         //Inserção para a base de dados
         dbTableDiasSemana.insert(DBTableDiasSemana.getContentValues(diasSemana));
         dbTableTreino.insert(DBTableTreino.getContentValues(treino));
+        //dbTableDiasSemana.delete(null,null);
+        //dbTableTreino.delete(null,null);
+
+        //dbTableDiasSemana.update(DBTableDiasSemana.getContentValues(diasSemana),DBTableDiasSemana._ID+"="+diasSemana.getIdDia(),null);
+
+        //dbTableTreino.update(DBTableTreino.getContentValues(treino),DBTableTreino._ID+"="+treino.getIdDia(),null);
+
+        //DbTableOrcamento._ID+"= (SELECT MAX(id_orcamento) FROM Orcamento)"
 
         db.close();
     }

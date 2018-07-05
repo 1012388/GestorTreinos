@@ -26,6 +26,7 @@ public class TreinoActivity extends AppCompatActivity {
     public static final String NUMERO_DE_SERIES = "Número de séries";
     public static final String NUMERO_DO_PESO_USADO = "Número do peso usado";
     public static final String TEM_DE_COLOCAR_UM_EXERCÍCIO = "Tem de colocar um exercício";
+    public static final String A_FECHAR_PORQUE_NÃO_HÁ_IDS = "A fechar porque não há ids";
 
 
     public int id =0;
@@ -40,8 +41,8 @@ public class TreinoActivity extends AppCompatActivity {
     private int series = 0;
     private int pesoUsado = 0;
     private int total_Reps = 0;
-    public DBTableTreino dbTableTreino;
-    public DBTableDiasSemana dbTableDiasSemana;
+    private DBTableTreino dbTableTreino;
+    private DBTableDiasSemana dbTableDiasSemana;
     private DBTreinoOpenHelper dbTreinoOpenHelper;
 
     ContentValues values = new ContentValues();
@@ -88,7 +89,7 @@ public class TreinoActivity extends AppCompatActivity {
         DiasSemana diasSemanas = new DiasSemana();
 
         if (treinoID < 0 || idDia == 0) {
-            Toast.makeText(getApplicationContext(), "A fechar porque não há ids", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), A_FECHAR_PORQUE_NÃO_HÁ_IDS, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }

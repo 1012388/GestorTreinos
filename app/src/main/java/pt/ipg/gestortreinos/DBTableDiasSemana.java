@@ -37,7 +37,7 @@ public class DBTableDiasSemana implements BaseColumns {
     }
 
 
-    public static DiasSemana getCurrentTreinoFromCursor(Cursor cursor) {
+    public static DiasSemana getCurrentDiaFromCursor(Cursor cursor) {
         final int posId = cursor.getColumnIndex(_ID);
         final int posNomeMes = cursor.getColumnIndex(NOME_MES);
 

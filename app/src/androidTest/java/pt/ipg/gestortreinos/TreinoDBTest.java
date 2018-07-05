@@ -134,7 +134,7 @@ public class TreinoDBTest {
       assertEquals("Falha ao ler o Dia",1,cursor.getCount());
       assertTrue("Falha ao ler o primeiro dia",cursor.moveToNext());
 
-      DiasSemana dia = DBTableDiasSemana.getCurrentTreinoFromCursor(cursor);
+      DiasSemana dia = DBTableDiasSemana.getCurrentDiaFromCursor(cursor);
 
       assertEquals("ID incorreto do dia ", expectedID,dia.getIdDia());
         assertEquals("Nome incorreto do dia", expectedNomeDia, dia.getNomeMes());
