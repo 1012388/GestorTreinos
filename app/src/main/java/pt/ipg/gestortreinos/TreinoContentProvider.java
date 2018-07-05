@@ -18,7 +18,7 @@ import java.text.BreakIterator;
 
 
 public class TreinoContentProvider extends ContentProvider {
-    private static final String AUTHORITY = "pt.ipg.books";
+    private static final String AUTHORITY = "pt.ipg.gestortreinos";
 
     public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
     public static final Uri TREINO_URI = Uri.withAppendedPath(BASE_URI, DBTableTreino.DATABASENAME_T);

@@ -9,20 +9,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
+import android.support.v4.content.CursorLoader;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.support.v4.content.CursorLoader;
 
 public class EditExercicioActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final int TREINO_CURSOR_LOADER_ID = 0;
-
+    public static final int DIAS_CURSOR_LOADER_ID = 0;
 
     private EditText editTextExercicio;
     private EditText editTextSerie;
@@ -85,7 +84,7 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportLoaderManager().initLoader(TREINO_CURSOR_LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(DIAS_CURSOR_LOADER_ID, null, this);
 
     }
 
@@ -93,7 +92,7 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
     protected void onResume() {
         super.onResume();
 
-        getSupportLoaderManager().restartLoader(TREINO_CURSOR_LOADER_ID, null, this);
+        getSupportLoaderManager().restartLoader(DIAS_CURSOR_LOADER_ID, null, this);
     }
 
     public void cancelar(View view) {
@@ -168,14 +167,14 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
             Toast.makeText(getApplicationContext(), "Update foi feito com sucesso", Toast.LENGTH_SHORT).show();
             finish();
             return;
+        }else if (linhasAfetadas <= 0){
+            Toast.makeText(getApplicationContext(), "Update foi feito com insucesso", Toast.LENGTH_SHORT).show();
         }
-
-        Toast.makeText(getApplicationContext(), "Update foi feito com insucesso", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        if (id == TREINO_CURSOR_LOADER_ID) {
+        if (id == DIAS_CURSOR_LOADER_ID) {
             return new CursorLoader(this, TreinoContentProvider.TREINO_URI
                     , DBTableDiasSemana.ALL_COLUMNS, null, null, null);
         }
@@ -224,15 +223,17 @@ public class EditExercicioActivity extends AppCompatActivity implements LoaderMa
      */
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        SimpleCursorAdapter cursorAdapterTreino = new SimpleCursorAdapter(
+        /*SimpleCursorAdapter cursorAdapterTreino = new SimpleCursorAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
                 data,
                 new String[]{DBTableTreino.TREINO_ID},
                 new int[]{android.R.id.text1}
-        );
+        );*/
 
-        spinnerTreino.setAdapter(cursorAdapterTreino);
+        SimpleCursorAdapter simpleCursorAdapterTreino = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, data, new String[]{DBTableTreino.TREINO_ID},
+                new int[]{android.R.id.text1});
+        spinnerTreino.setAdapter(simpleCursorAdapterTreino);
 
         int idTreino = treino.getTreinoId();
 

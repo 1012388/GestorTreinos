@@ -9,12 +9,12 @@ public class DBTableTreino implements BaseColumns {
 
     public static final String DATABASENAME_T = "treino";
 
-    public static final String REPETICOES = "Repeticoes";
-    public static final String EXERCICIO = "Exercicio";
+    public static final String REPETICOES = "repeticoes";
+    public static final String EXERCICIO = "exercicio";
     public static final String ID_DIA = "id_dia";
-    public static final String PESO_USADO = "PesoUsado";
-    public static final String SERIES = "Series";
-    public static final String TOTAL_REPS = "Total_Reps";
+    public static final String PESO_USADO = "pesoUsado";
+    public static final String SERIES = "series";
+    public static final String TOTAL_REPS = "total_Reps";
 
     public static final String [] ALL_COLUMNS = new String[] { _ID,EXERCICIO,PESO_USADO,REPETICOES, SERIES, TOTAL_REPS};
     public static final String TREINO_ID = "Treino ID";
@@ -57,6 +57,7 @@ public class DBTableTreino implements BaseColumns {
         final int posExercicio = cursor.getColumnIndex(EXERCICIO);
         final int posRepeticoes = cursor.getColumnIndex(REPETICOES);
         final int posSeries = cursor.getColumnIndex(SERIES);
+        final int posTotal = cursor.getColumnIndex(TOTAL_REPS);
         final int posId_Dia = cursor.getColumnIndex(ID_DIA);
 
         Treinos treino = new Treinos();

@@ -19,11 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".TreinoActivity"
             android:label="@string/title_activity_treino"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ipg.gestortreinos.MainActivity" />
+        </activity>
+
 
         <provider
             android:name=".TreinoContentProvider"
@@ -39,7 +46,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ipg.gestortreinos.MainActivity" />
         </activity>
-        <activity android:name=".ListaActivity"></activity>
+
+        <activity
+            android:name=".ListaActivity"
+            android:label="@string/title_activity_lista"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

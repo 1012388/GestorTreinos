@@ -40,8 +40,8 @@ public class TreinoActivity extends AppCompatActivity {
     private int series = 0;
     private int pesoUsado = 0;
     private int total_Reps = 0;
-    private DBTableTreino dbTableTreino;
-    private DBTableDiasSemana dbTableDiasSemana;
+    public DBTableTreino dbTableTreino;
+    public DBTableDiasSemana dbTableDiasSemana;
     private DBTreinoOpenHelper dbTreinoOpenHelper;
 
     ContentValues values = new ContentValues();
@@ -94,12 +94,6 @@ public class TreinoActivity extends AppCompatActivity {
         }
 
         idTreino = treinoID;
-
-        /*String exercicio = "";
-        int repeticoes = 0;
-        int series = 0;
-        int pesoUsado = 0;*/
-        //int total_Reps = 0;
 
 
         TextView textViewDia = (TextView) findViewById(R.id.textViewDia);
@@ -196,9 +190,6 @@ public class TreinoActivity extends AppCompatActivity {
 
         db.close();
     }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -214,36 +205,25 @@ public class TreinoActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if(id == R.id.action_Eliminar){//Eliminar treino
-           // deleteTreino();
+        if(id == R.id.action_Listar){//Eliminar treino
+            showListar();
+            Toast.makeText(getApplicationContext(), "Lista de todos os treinos" , Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.action_AdicionarEx) {//adicionar um novo exercicio
-            //adicionarExercicio();
+        } else if (id == R.id.action_Eliminar) {//adicionar um novo exercicio
+            Toast.makeText(getApplicationContext(), "Eliminar" , Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
 
-   /* private void adicionarExercicio() {
-        int treino_id = treino.getTreinoId();
+    private void showListar() {
+        Intent intent = new Intent(this, ListaActivity.class);
 
-        Intent intent = new Intent(this, EditExercicioActivity.class);
-
-        intent.putExtra(MainActivity.TREINO_ID, treino_id);
-
+        /*intent.putExtra("Treino ID",treino.getTreinoId());
+        intent.putExtra("Dia ID",diasSemana.getIdDia());*/
 
         startActivity(intent);
-    }*/
-
-    private void deleteTreino() {
-        //eliminar botão escolhido
-
-        /*Algoritmo para eliminar botão:
-            Selecionar botão,ou seja criar uma check box para o botão
-                Torná-lo invisível
-         */
-   }
 
 
-
+    }
 
 }

@@ -58,7 +58,7 @@ public class TreinoCursorAdapter extends RecyclerView.Adapter<TreinoCursorAdapte
     @NonNull
     @Override
     public TreinoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(context).inflate(R.layout.item_treino, parent, false);
+        View item = LayoutInflater.from(context).inflate(R.layout.content_lista, parent, false);
 
         return new TreinoViewHolder(item);
     }

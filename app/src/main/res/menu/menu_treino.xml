@@ -1,11 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="pt.ipg.gestortreinos.TreinoActivity">
 
     <item
-        android:id="@+id/action_AdicionarEx"
-        android:title="Adicionar exercicio" />
+        android:id="@+id/action_Listar"
+        android:orderInCategory="102"
+        android:title="Listar treinos" />
     <item
-        android:id="@+id/action_EliminarEx"
-        android:layout_height="match_parent"
-        android:title="Eliminar exercicio" />
+        android:id="@+id/action_Eliminar"
+        android:orderInCategory="103"
+        android:title="@string/eliminar_treino" />
 </menu>
