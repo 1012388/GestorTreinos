@@ -2,23 +2,11 @@
 package pt.ipg.gestortreinos;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.UriMatcher;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.view.View;
@@ -27,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
 
 import android.widget.TextView;
@@ -38,6 +25,12 @@ public class MainActivity extends AppCompatActivity  {
     public static final String VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO = "Vezes que clicado em adicionar treino";
     public static final String TREINO_ID = "Treino ID";
     public static final String DIA = "Dia";
+    public static final String EXERCICIO = "Exercicio";
+    public static final String PESO_USADO = "Peso Usado";
+    public static final String SERIES = "Séries";
+    public static final String TOTAL = "Total";
+    public static final String MES = "mês";
+    public static final String REPETICOES = "Repetições";
     public int conta = 0;
     private  Button b1;
     int tag_id = 0;
@@ -77,14 +70,14 @@ public class MainActivity extends AppCompatActivity  {
     private void createNewPraticeButton() {//Cria um botão que ao ser presionado abre a atividade Treinos
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-
+/*
         DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(getApplicationContext());
         SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
 
         DBTableTreino dbTableTreino = new DBTableTreino(db);
 
 
-        DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);
+        DBTableDiasSemana dbTableDiasSemana = new DBTableDiasSemana(db);*/
 
 
         b1 = new Button(MainActivity.this);
@@ -114,8 +107,8 @@ public class MainActivity extends AppCompatActivity  {
         treino.setPesoUsado(0);
 
         //Inserção para a base de dados
-        dbTableDiasSemana.insert(DBTableDiasSemana.getContentValues(diasSemana));
-        dbTableTreino.insert(DBTableTreino.getContentValues(treino));
+        //dbTableDiasSemana.insert(DBTableDiasSemana.getContentValues(diasSemana));
+        //dbTableTreino.insert(DBTableTreino.getContentValues(treino));
         //dbTableDiasSemana.delete(null,null);
         //dbTableTreino.delete(null,null);
 
@@ -125,7 +118,7 @@ public class MainActivity extends AppCompatActivity  {
 
         //DbTableOrcamento._ID+"= (SELECT MAX(id_orcamento) FROM Orcamento)"
 
-        db.close();
+        //db.close();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,12 +135,7 @@ public class MainActivity extends AppCompatActivity  {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-
-        if (id == R.id.action_Eliminar) {//Adicionar treino
-            //deleteTreinoButton();
-            //conta++;
-            Toast.makeText(getApplicationContext(), "A eliminar o treino:" + tag_id, Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.action_Listar) {
+        if (id == R.id.action_Listar) {
             showListar();
             Toast.makeText(getApplicationContext(), "Lista de todos os treinos" , Toast.LENGTH_SHORT).show();
         }
@@ -158,7 +146,7 @@ public class MainActivity extends AppCompatActivity  {
         Intent intent = new Intent(this, ListaActivity.class);
 
         intent.putExtra(TREINO_ID, treino.getTreinoId());
-        intent.putExtra(DIA, diasSemana.getIdDia());
+       // intent.putExtra(DIA, diasSemana.getIdDia());
 
         startActivity(intent);
     }
@@ -174,7 +162,15 @@ public class MainActivity extends AppCompatActivity  {
         Intent intent = new Intent(this, TreinoActivity.class);
 
         intent.putExtra(TREINO_ID, treino.getTreinoId());
+        intent.putExtra(EXERCICIO, treino.getExercicio());
+        intent.putExtra(PESO_USADO, treino.getPesoUsado());
+        intent.putExtra(REPETICOES, treino.getRepeticoes());
+        intent.putExtra(SERIES, treino.getSeries());
+        intent.putExtra(TOTAL, treino.getTotal_Reps(treino.getRepeticoes(),treino.getSeries()));
+
         intent.putExtra(DIA, diasSemana.getIdDia());
+        intent.putExtra(MES, diasSemana.getNomeMes());
+
 
 
         startActivity(intent);

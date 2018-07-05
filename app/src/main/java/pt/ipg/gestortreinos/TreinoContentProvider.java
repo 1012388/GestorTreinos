@@ -41,7 +41,7 @@ public class TreinoContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, "treino", TREINO);
         uriMatcher.addURI(AUTHORITY, "treino/#", TREINO_ID);
 
-        uriMatcher.addURI(AUTHORITY, "DiasSemana", DIASSEMANAS);
+        uriMatcher.addURI(AUTHORITY, "diasSemana", DIASSEMANAS);
         uriMatcher.addURI(AUTHORITY, "diasSemana/#", DIASSEMANAS_ID);
 
         return uriMatcher;
@@ -68,14 +68,14 @@ public class TreinoContentProvider extends ContentProvider {
             case TREINO:
                 return new DBTableTreino(db).query(projection, selection, selectionArgs, null, null, sortOrder);
 
-            case TREINO_ID:
-                return new DBTableTreino(db).query(projection, selection, selectionArgs, null, null, sortOrder);
-
             case DIASSEMANAS:
                 return new DBTableDiasSemana(db).query(projection, selection, selectionArgs, null, null, sortOrder);
 
+            case TREINO_ID:
+                return new DBTableTreino(db).query(projection, DBTableTreino._ID +"=?"+new String[] {id}, null, null, null,null);
+
             case DIASSEMANAS_ID:
-                return new DBTableDiasSemana(db).query(projection, selection, selectionArgs, null, null, sortOrder);
+                return new DBTableDiasSemana(db).query(projection, DBTableDiasSemana._ID+"=?"+new String[] {id}, null, null, null,null);
 
             default:
                 throw new UnsupportedOperationException("Uri Inválida" + uri);

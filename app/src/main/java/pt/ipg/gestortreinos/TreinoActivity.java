@@ -77,7 +77,15 @@ public class TreinoActivity extends AppCompatActivity {
     private void createTreino() {
         Intent intent = getIntent();
         int treinoID = intent.getIntExtra(MainActivity.VEZES_QUE_CLICADO_EM_ADICIONAR_TREINO, 0);
+        String exercicio = intent.getStringExtra(MainActivity.EXERCICIO);
+        int peso = intent.getIntExtra(MainActivity.PESO_USADO, 0);
+        int repeticoes = intent.getIntExtra(MainActivity.REPETICOES, 0);
+        int series = intent.getIntExtra(MainActivity.SERIES, 0);
+        int total = intent.getIntExtra(MainActivity.TOTAL, 0);
+
+
         int idDia = intent.getIntExtra(MainActivity.DIA, 0);
+        int mes = intent.getIntExtra(MainActivity.MES, 0);
 
         DBTreinoOpenHelper dbTreinoOpenHelper = new DBTreinoOpenHelper(this);
         SQLiteDatabase db = dbTreinoOpenHelper.getWritableDatabase();
@@ -111,14 +119,14 @@ public class TreinoActivity extends AppCompatActivity {
         treino.setTreinoId(idTreino);
 
         try {
-            exercicio = editTextExercicio.getText().toString();
+            this.exercicio = editTextExercicio.getText().toString();
 
-            if (exercicio.trim().isEmpty()) {
+            if (this.exercicio.trim().isEmpty()) {
                 editTextExercicio.setError(TEM_DE_COLOCAR_UM_EXERCÍCIO);
                 editTextExercicio.requestFocus();
 
             } else {
-                treino.setExercicio(exercicio);
+                treino.setExercicio(this.exercicio);
             }
 
         } catch (NumberFormatException e) {//Apanhar se o campo ficar vazio
@@ -142,12 +150,12 @@ public class TreinoActivity extends AppCompatActivity {
         }
 
         try {
-            repeticoes = Integer.parseInt(editTextRep.getText().toString());
-            if (repeticoes <= 0) {
+            this.repeticoes = Integer.parseInt(editTextRep.getText().toString());
+            if (this.repeticoes <= 0) {
                 editTextRep.setError(NUMERO_DE_REPETICOES_INVALIDO);
                 editTextRep.requestFocus();
             } else {//se for bem introduzido
-                treino.setRepeticoes(repeticoes);
+                treino.setRepeticoes(this.repeticoes);
             }
 
         } catch (NumberFormatException e) {
@@ -157,39 +165,39 @@ public class TreinoActivity extends AppCompatActivity {
         }
 
         try {
-            series = Integer.parseInt(editTextSerie.getText().toString());
-            if(series <= 0){//se o idTreino for mal introduzido
+            this.series = Integer.parseInt(editTextSerie.getText().toString());
+            if(this.series <= 0){//se o idTreino for mal introduzido
                 editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
                 editTextSerie.requestFocus();
 
             }else {
-                treino.setSeries(series);
+                treino.setSeries(this.series);
             }
         } catch (NumberFormatException e) {
             editTextSerie.setError(NUMERO_DE_SERIES_INVALIDO);
             editTextSerie.requestFocus();
             return;
         }
-        //textView_Total.setText("Total de Repetições:" + treino.getRepeticoes() * treino.getSeries());
-
-        // if(novosValores) {
-        dbTableDiasSemana.insert(dbTableDiasSemana.getContentValues(diasSemanas));
-        dbTableTreino.insert(dbTableTreino.getContentValues(treino));
 
 
-/*
-            editTextExercicio.setText("");
-            editTextRep.setText("");
-            editTextPeso.setText("");
-            editTextSerie.setText("");
-            textView_Total.setText("");
 
-            novosValores = !novosValores;*/
-        textView_Total.setText("" + dbTableTreino.getContentValues(treino));
-        //}
+        textView_Total.setText("Total de Repetições:" + treino.getRepeticoes() * treino.getSeries());
 
+        //DEBUG
+        //textView_Total.setText("" + dbTableTreino.getContentValues(treino));
+        //textView_Total.setText("" + dbTableDiasSemana.getContentValues(diasSemanas));
+
+
+        //dbTableDiasSemana.insert(dbTableDiasSemana.getContentValues(diasSemanas));
+        //dbTableTreino.insert(dbTableTreino.getContentValues(treino));
+
+        editTextRep.setText("");
+        editTextPeso.setText("");
+        editTextSerie.setText("");
+        textView_Total.setText("");
 
         db.close();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -210,8 +218,6 @@ public class TreinoActivity extends AppCompatActivity {
             showListar();
             Toast.makeText(getApplicationContext(), "Lista de todos os treinos" , Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.action_Eliminar) {//adicionar um novo exercicio
-            Toast.makeText(getApplicationContext(), "Eliminar" , Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
